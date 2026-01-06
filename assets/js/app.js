@@ -1,4 +1,4 @@
-const username = 'musfiqurjahin';
+const username = 'hasinhayder';
 let allRepos = [];
 let filteredRepos = [];
 let currentPage = 1;
@@ -644,45 +644,68 @@ async function openFollowersModal() {
     const list = document.getElementById('followers-list');
 
     list.innerHTML = `
-                <div class="loading">
-                    <i class="fas fa-spinner fa-spin"></i>
-                    <p>Loading followers...</p>
-                </div>
-            `;
+        <div class="loading">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Loading followers...</p>
+        </div>
+    `;
 
     modal.classList.add('active');
 
     try {
-        const response = await fetch(`https://api.github.com/users/${username}/followers`);
-        const followers = await response.json();
+        let allFollowers = [];
+        let page = 1;
+        const perPage = 100;
 
-        if (!followers || followers.length === 0) {
-            list.innerHTML = '<div style="text-align: center; padding: 40px; color: var(--gray);">No followers yet</div>';
+        while (true) {
+            const response = await fetch(
+                `https://api.github.com/users/${username}/followers?per_page=${perPage}&page=${page}`
+            );
+
+            const followers = await response.json();
+
+            if (!Array.isArray(followers) || followers.length === 0) break;
+
+            allFollowers = allFollowers.concat(followers);
+            page++;
+        }
+
+        if (allFollowers.length === 0) {
+            list.innerHTML = `
+                <div style="text-align:center; padding:40px; color:var(--gray);">
+                    No followers yet
+                </div>
+            `;
             return;
         }
 
-        let followersHTML = '';
-        followers.forEach(follower => {
-            followersHTML += `
-                        <div class="follower-item">
-                            <div class="follower-avatar">
-                                <img src="${follower.avatar_url}" alt="${follower.login}">
-                            </div>
-                            <div class="follower-info">
-                                <div class="follower-name">${follower.login}</div>
-                                <div class="follower-username">@${follower.login}</div>
-                            </div>
-                            <a href="https://github.com/${follower.login}" target="_blank" class="follower-btn"><i class="fas fa-external-link-alt"></i> View </a>
-                        </div>
-                    `;
-        });
+        list.innerHTML = allFollowers.map(follower => `
+            <div class="follower-item">
+                <div class="follower-avatar">
+                    <img src="${follower.avatar_url}" alt="${follower.login}">
+                </div>
+                <div class="follower-info">
+                    <div class="follower-name">${follower.login}</div>
+                    <div class="follower-username">@${follower.login}</div>
+                </div>
+                <a href="https://github.com/${follower.login}" 
+                   target="_blank" 
+                   class="follower-btn">
+                   <i class="fas fa-external-link-alt"></i> View
+                </a>
+            </div>
+        `).join('');
 
-        list.innerHTML = followersHTML;
     } catch (error) {
         console.error('Error loading followers:', error);
-        list.innerHTML = '<div style="text-align: center; padding: 40px; color: var(--gray);">Failed to load followers</div>';
+        list.innerHTML = `
+            <div style="text-align:center; padding:40px; color:var(--gray);">
+                Failed to load followers
+            </div>
+        `;
     }
 }
+
 
 function updateAnalytics() {
     const languages = {};
