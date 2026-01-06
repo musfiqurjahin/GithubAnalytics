@@ -270,6 +270,6 @@ Planned features for future versions:
 
 ---
 
-**Made with ❤️ by [Musfiqur Jahin](https://github.com/musfiqurjahin)**
+**Made with ❤️ by [Musfiqur Jahin](https://musfiqurjahin.github.io)**
 
 If you find this project helpful, please consider giving it a ⭐ on GitHub!
