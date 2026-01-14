@@ -1,0 +1,3685 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Musfiqur Jahin | GitHub Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="assets/Favicon/598ec42e15c85716c6954c26840d4f4b-removebg-preview.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css">
+</head>
+<style>
+    :root {
+    --primary: #2563eb;
+    --primary-light: #3b82f6;
+    --dark: #0f172a;
+    --dark-card: #1e293b;
+    --light: #f8fafc;
+    --gray: #94a3b8;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --verified: #1DA1F2;
+    --danger: #ef4444;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+}
+
+body {
+    background-color: var(--dark);
+    color: var(--light);
+    min-height: 100vh;
+    line-height: 1.5;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Profile Header */
+.profile-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 25px;
+    margin-bottom: 30px;
+    padding: 25px;
+    background: var(--dark-card);
+    border-radius: 16px;
+    position: relative;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid var(--primary);
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.avatar:hover {
+    transform: scale(1.05);
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-info {
+    flex-grow: 1;
+}
+
+.profile-name-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 5px;
+    flex-wrap: wrap;
+}
+
+.profile-name {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--light);
+}
+
+.verified-badge {
+    width: 30px;
+    height: 30px;
+    position: relative;
+    margin-top: 7px;
+    margin-left: 3px;
+    transition: transform 0.5s ease;
+}
+
+.verified-badge:hover {
+    transform: rotate(360deg);
+}
+
+.verified-badge img {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 3px rgba(29, 161, 242, 0.5));
+}
+
+.profile-username {
+    font-size: 1.1rem;
+    color: var(--gray);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.profile-bio {
+    color: var(--light);
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+    max-width: 600px;
+    line-height: 1.6;
+}
+
+.profile-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--gray);
+    font-size: 0.85rem;
+    padding: 4px 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+}
+
+/* Follow Button */
+.follow-btn-container {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+}
+
+.follow-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.follow-btn:hover {
+    background: var(--primary-light);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.follow-btn.following {
+    background: var(--success);
+}
+
+.follow-btn.following:hover {
+    background: #0da271;
+}
+
+.follow-btn i {
+    font-size: 0.9rem;
+}
+
+/* Stats Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background: var(--dark-card);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.03), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+}
+
+.stat-card:hover::before {
+    transform: translateX(100%);
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.stat-icon {
+    font-size: 1.5rem;
+    color: var(--primary-light);
+    margin-bottom: 10px;
+}
+
+.stat-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: var(--light);
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    color: var(--gray);
+}
+
+.streak-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(245, 158, 11, 0.1);
+    color: var(--warning);
+    padding: 4px 8px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    margin-top: 8px;
+}
+
+.streak-image {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.streak-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.streak-image img:hover {
+    transform: scale(1.02);
+}
+
+/* Tabs */
+.tabs {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 20px;
+    background: var(--dark-card);
+    padding: 5px;
+    border-radius: 12px;
+    width: fit-content;
+}
+
+.tab {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    color: var(--gray);
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.tab:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.tab.active {
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+}
+
+.tab i {
+    font-size: 0.9rem;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Repositories Grid */
+.repos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.repo-card {
+    background: var(--dark-card);
+    border-radius: 16px;
+    padding: 25px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.repo-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1.5px;
+    border-radius: inherit;
+    background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    background-size: 300% 100%;
+    animation: borderShine 3.5s linear infinite;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.repo-card:hover::before {
+    opacity: 1;
+}
+
+.repo-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes borderShine {
+    0% { background-position: -200% 50%; }
+    100% { background-position: 200% 50%; }
+}
+
+.repo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    gap: 10px;
+}
+
+.repo-name-container {
+    flex-grow: 1;
+    min-width: 0;
+}
+
+.repo-name {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--light);
+    text-decoration: none;
+    display: block;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.3;
+    margin-bottom: 5px;
+}
+
+.repo-name:hover {
+    color: var(--primary-light);
+    text-decoration: underline;
+}
+
+.repo-visibility {
+    font-size: 0.7rem;
+    padding: 3px 8px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--gray);
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.repo-desc {
+    color: var(--gray);
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+    line-height: 1.5;
+    flex-grow: 1;
+}
+
+.repo-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+}
+
+.repo-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--gray);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.repo-meta-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.repo-meta-item i {
+    color: var(--primary-light);
+    font-size: 0.9rem;
+}
+
+.repo-topics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.repo-topic {
+    background: rgba(37, 99, 235, 0.1);
+    color: var(--primary-light);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.repo-topic:hover {
+    background: rgba(37, 99, 235, 0.2);
+    transform: translateY(-2px);
+}
+
+.repo-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.repo-language {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+}
+
+.language-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    box-shadow: 0 0 4px currentColor;
+}
+
+.repo-stats {
+    display: flex;
+    gap: 10px;
+}
+
+.repo-stat {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--gray);
+    font-size: 0.9rem;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 5px 10px;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.repo-stat:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.repo-stat i {
+    font-size: 0.9rem;
+}
+
+/* Filter and Search */
+.filter-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: none;
+    border-radius: 20px;
+    color: var(--gray);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.filter-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.filter-btn.active {
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+}
+
+.search-box {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.search-input {
+    padding: 10px 15px 10px 40px;
+    background: var(--dark-card);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    color: var(--light);
+    font-size: 0.9rem;
+    width: 250px;
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    width: 300px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray);
+}
+
+/* Analytics */
+.analytics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.analytics-card {
+    background: var(--dark-card);
+    border-radius: 12px;
+    padding: 25px;
+    transition: transform 0.3s ease;
+}
+
+.analytics-card:hover {
+    transform: translateY(-5px);
+}
+
+.analytics-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: var(--light);
+}
+
+.analytics-title i {
+    color: var(--primary-light);
+}
+
+.language-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.language-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.language-bar {
+    flex-grow: 1;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.language-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 1s ease;
+}
+
+/* Load More Button */
+.load-more-container {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.load-more-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 24px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.load-more-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.load-more-btn:hover::before {
+    left: 100%;
+}
+
+.load-more-btn:hover {
+    background: var(--primary-light);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.load-more-btn i {
+    font-size: 1rem;
+}
+
+.load-more-btn .count {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+}
+
+.load-more-btn.hidden {
+    display: none;
+}
+
+/* Loading States */
+.loading {
+    text-align: center;
+    padding: 40px 0;
+    color: var(--gray);
+}
+
+.loading i {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Modals */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    backdrop-filter: blur(5px);
+}
+
+.modal.active {
+    display: flex;
+    animation: fadeIn 0.3s ease;
+}
+
+.modal.fullscreen {
+    padding: 0;
+    background: var(--dark);
+}
+
+.modal.fullscreen .modal-content {
+    max-width: 100%;
+    max-height: 100vh;
+    height: 100vh;
+    border-radius: 0;
+}
+
+.modal-content {
+    background: var(--dark-card);
+    border-radius: 20px;
+    width: 100%;
+    max-width: 900px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    animation: slideUp 0.3s ease;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-header {
+    padding: 20px 30px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--light);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.modal-action-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: var(--gray);
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.modal-action-btn:hover {
+    background: var(--primary);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.modal-close {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: var(--gray);
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.modal-close:hover {
+    background: var(--danger);
+    color: white;
+    transform: rotate(90deg);
+}
+
+.modal-body {
+    padding: 30px;
+}
+
+.modal-footer {
+    padding: 20px 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    position: sticky;
+    bottom: 0;
+}
+
+.modal-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+}
+
+.modal-btn:hover {
+    background: var(--primary-light);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.modal-btn.outline {
+    background: transparent;
+    border: 1px solid var(--gray);
+    color: var(--gray);
+}
+
+.modal-btn.outline:hover {
+    border-color: var(--light);
+    color: var(--light);
+}
+
+.modal-btn.danger {
+    background: var(--danger);
+}
+
+.modal-btn.danger:hover {
+    background: #dc2626;
+}
+
+.followers-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.follower-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    transition: all 0.3s;
+    border: 1px solid transparent;
+}
+
+.follower-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(5px);
+    border-color: var(--primary);
+}
+
+.follower-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--primary);
+}
+
+.follower-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.follower-info {
+    flex-grow: 1;
+}
+
+.follower-name {
+    font-weight: 600;
+    color: var(--light);
+    font-size: 1rem;
+}
+
+.follower-username {
+    color: var(--gray);
+    font-size: 0.85rem;
+}
+
+.follower-btn {
+    padding: 8px 16px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.follower-btn:hover {
+    background: var(--primary-light);
+    transform: translateY(-2px);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Enhanced Repository Modal Styles */
+.repo-details-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    gap: 20px;
+}
+
+.repo-main-info {
+    flex: 1;
+}
+
+.repo-name-large {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--light);
+    margin-bottom: 10px;
+    line-height: 1.2;
+}
+
+.repo-description {
+    color: var(--gray);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+.repo-visibility-large {
+    font-size: 0.8rem;
+    padding: 6px 15px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--gray);
+    display: inline-block;
+    font-weight: 500;
+}
+
+.repo-details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
+    margin: 25px 0;
+}
+
+.repo-detail-item {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    border-radius: 12px;
+    transition: all 0.3s;
+    border: 1px solid transparent;
+}
+
+.repo-detail-item:hover {
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--primary);
+}
+
+.repo-detail-label {
+    font-size: 0.9rem;
+    color: var(--gray);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.repo-detail-value {
+    font-weight: 700;
+    color: var(--light);
+    font-size: 1.3rem;
+}
+
+.repo-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 15px;
+    margin: 25px 0;
+}
+
+.repo-stat-item {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.repo-stat-item:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.repo-stat-value {
+    font-weight: 700;
+    color: var(--light);
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+}
+
+.repo-stat-label {
+    font-size: 0.9rem;
+    color: var(--gray);
+}
+
+.modal-topics {
+    margin: 25px 0;
+}
+
+.modal-topic {
+    background: rgba(37, 99, 235, 0.1);
+    color: var(--primary-light);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    display: inline-block;
+    margin: 5px;
+    transition: all 0.3s;
+    cursor: pointer;
+    border: 1px solid transparent;
+}
+
+.modal-topic:hover {
+    background: rgba(37, 99, 235, 0.2);
+    transform: translateY(-2px);
+    border-color: var(--primary);
+}
+
+.language-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.language-bar-large {
+    flex: 1;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.language-fill-large {
+    height: 100%;
+    border-radius: 5px;
+    transition: width 1s ease;
+}
+
+.language-percentage {
+    min-width: 50px;
+    text-align: right;
+    font-weight: 600;
+    color: var(--light);
+}
+
+/* NEW: File Explorer Styles */
+.file-explorer {
+    margin-top: 10px;
+}
+
+.file-explorer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.file-explorer-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.file-explorer-breadcrumb {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.breadcrumb-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--gray);
+    cursor: pointer;
+    transition: all 0.2s;
+    padding: 5px 10px;
+    border-radius: 6px;
+}
+
+.breadcrumb-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--primary-light);
+}
+
+.breadcrumb-separator {
+    color: var(--gray);
+    margin: 0 5px;
+}
+
+.current-path {
+    font-weight: 600;
+    color: var(--light);
+}
+
+.files-container {
+    max-height: 500px;
+    overflow-y: auto;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.files-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.file-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.file-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateX(5px);
+}
+
+.file-item:last-child {
+    border-bottom: none;
+}
+
+.file-icon {
+    width: 24px;
+    text-align: center;
+    color: var(--primary-light);
+    font-size: 1.1rem;
+}
+
+.file-folder-icon {
+    color: var(--warning);
+}
+
+.file-name {
+    flex: 1;
+    color: var(--light);
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.file-size {
+    color: var(--gray);
+    font-size: 0.9rem;
+    min-width: 100px;
+    text-align: right;
+}
+
+.file-commit {
+    color: var(--gray);
+    font-size: 0.85rem;
+    min-width: 140px;
+    text-align: right;
+}
+
+.file-content-preview {
+    margin-top: 20px;
+    max-height: 600px;
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.file-content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 5;
+}
+
+.file-content-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.file-content-actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* Code Preview Styles */
+.code-preview-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.code-preview-header {
+    padding: 15px 20px;
+    background: #161b22;
+    border-bottom: 1px solid #30363d;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.code-preview-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.code-language-badge {
+    background: rgba(88, 166, 255, 0.1);
+    color: #58a6ff;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.code-size {
+    color: #8b949e;
+    font-size: 0.9rem;
+}
+
+.code-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.code-action-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid #30363d;
+    color: #c9d1d9;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.code-action-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #8b949e;
+}
+
+.code-action-btn.copy {
+    background: #238636;
+    border-color: #238636;
+    color: white;
+}
+
+.code-action-btn.copy:hover {
+    background: #2ea043;
+    border-color: #2ea043;
+}
+
+.code-action-btn.copy.copied {
+    background: #238636;
+    border-color: #238636;
+}
+
+.code-content {
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    background: #0d1117;
+}
+
+pre {
+    margin: 0;
+    padding: 20px;
+    overflow-x: auto;
+}
+
+pre code {
+    color: #c9d1d9;
+    background: transparent;
+    padding: 0;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.hljs {
+    background: transparent !important;
+}
+
+.line-numbers {
+    display: none;
+}
+
+.back-to-files {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: var(--gray);
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 500;
+}
+
+.back-to-files:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--light);
+    border-color: var(--primary);
+    transform: translateX(-5px);
+}
+
+.loading-files {
+    text-align: center;
+    padding: 40px;
+    color: var(--gray);
+}
+
+.empty-folder {
+    text-align: center;
+    padding: 60px 40px;
+    color: var(--gray);
+}
+
+.empty-folder i {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    color: var(--gray);
+    opacity: 0.5;
+}
+
+/* Action Buttons in Repo Card */
+.repo-actions {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    display: flex;
+    gap: 8px;
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+    transform: translateX(10px);
+}
+
+.repo-card:hover .repo-actions {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.action-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--gray);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+.action-btn:hover {
+    background: var(--primary);
+    color: white;
+    transform: translateY(-2px) scale(1.1);
+    border-color: var(--primary);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.action-btn.explore {
+    background: rgba(245, 158, 11, 0.1);
+    border-color: rgba(245, 158, 11, 0.2);
+    color: var(--warning);
+}
+
+.action-btn.explore:hover {
+    background: var(--warning);
+    color: white;
+    border-color: var(--warning);
+}
+
+/* Code Editor Preview */
+.code-editor {
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 20px 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.editor-header {
+    background: #1e1e1e;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #2d2d2d;
+}
+
+.editor-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.editor-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.editor-control {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.editor-control.close {
+    background: #ff5f56;
+}
+
+.editor-control.minimize {
+    background: #ffbd2e;
+}
+
+.editor-control.maximize {
+    background: #27c93f;
+}
+
+.editor-content {
+    background: #1e1e1e;
+    padding: 0;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .repos-grid {
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .profile-name-container {
+        justify-content: center;
+    }
+
+    .follow-btn-container {
+        position: relative;
+        top: 0;
+        right: 0;
+        margin-top: 15px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .profile-meta {
+        justify-content: center;
+    }
+
+    .repos-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .filter-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .search-input {
+        width: 100%;
+    }
+
+    .search-input:focus {
+        width: 100%;
+    }
+
+    .modal-content {
+        max-height: 95vh;
+        border-radius: 16px;
+    }
+
+    .repo-details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .file-explorer-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .file-item {
+        flex-wrap: wrap;
+        padding: 12px 15px;
+    }
+
+    .file-commit {
+        min-width: 100%;
+        text-align: left;
+        margin-top: 5px;
+        padding-top: 5px;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .modal-header {
+        padding: 15px 20px;
+    }
+
+    .modal-body {
+        padding: 20px;
+    }
+
+    .modal-footer {
+        padding: 15px 20px;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .tabs {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .profile-name {
+        font-size: 1.5rem;
+    }
+    
+    .repo-name-large {
+        font-size: 1.5rem;
+    }
+    
+    .modal-title {
+        font-size: 1.2rem;
+    }
+    
+    .file-explorer-title {
+        font-size: 1.1rem;
+    }
+}
+
+/* Error State */
+.error-state {
+    text-align: center;
+    padding: 40px;
+    color: var(--gray);
+}
+
+.error-state i {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    color: var(--warning);
+}
+
+.retry-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    margin-top: 15px;
+    cursor: pointer;
+    font-weight: 600;
+    margin: 0 auto;
+    transition: all 0.3s;
+}
+
+.retry-btn:hover {
+    background: var(--primary-light);
+    transform: translateY(-2px);
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Selection Styling */
+::selection {
+    background: rgba(37, 99, 235, 0.3);
+    color: white;
+}
+
+/* Focus Styles */
+:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+/* Tooltip */
+[data-tooltip] {
+    position: relative;
+}
+
+[data-tooltip]:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    z-index: 1000;
+    margin-bottom: 5px;
+}
+
+[data-tooltip]:hover::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    margin-bottom: -5px;
+}
+
+/* Pulse Animation */
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(37, 99, 235, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+}
+
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+/* Gradient Text */
+.gradient-text {
+    background: linear-gradient(90deg, var(--primary), var(--primary-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Card Hover Effects */
+.hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+</style>
+
+<body>
+    <div class="container">
+        <!-- Profile Header -->
+        <div class="profile-header">
+            <div class="avatar">
+                <div id="avatar-placeholder"
+                    style="width: 100%; height: 100%; background: linear-gradient(45deg, #2d3748, #4a5568); display: flex; align-items: center; justify-content: center; color: var(--gray);">
+                    <i class="fas fa-user" style="font-size: 3rem;"></i>
+                </div>
+            </div>
+
+            <div class="profile-info">
+                <div class="profile-name-container">
+                    <h1 class="profile-name" id="profile-name">Musfiqur Jahin</h1>
+                    <div class="verified-badge">
+                        <img src="assets/img/verified/UFBKxsTESHe.png" title="Verified" alt="Verified Badge">
+                    </div>
+                </div>
+                <div class="profile-username" id="profile-username">
+                    <i class="fab fa-github"></i>
+                    <span>@musfiqurjahin</span>
+                </div>
+                <p class="profile-bio" id="profile-bio"><i style="font-size: small;"
+                        class="fas fa-spinner fa-spin"></i>Loading...</p>
+
+                <div class="profile-meta">
+                    <div class="meta-item" id="location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span><i style="font-size: smaller;" class="fas fa-spinner fa-spin"></i>Loading...</span>
+                    </div>
+                    <div class="meta-item" id="website">
+                        <i class="fas fa-external-link-alt"></i>
+                        <span><i style="font-size: smaller;" class="fas fa-spinner fa-spin"></i>Loading...</span>
+                    </div>
+                    <div class="meta-item" id="joined-date">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span><i style="font-size: smaller;" class="fas fa-spinner fa-spin"></i>Loading...</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Follow Button -->
+            <div class="follow-btn-container">
+                <a href="#" target="_blank" class="follow-btn" id="follow-btn">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Follow me on GitHub</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-code-branch"></i>
+                </div>
+                <div class="stat-value" id="total-repos"><i style="font-size: medium;"
+                        class="fas fa-spinner fa-spin"></i></div>
+                <div class="stat-label">Repositories</div>
+            </div>
+
+            <div class="stat-card" id="followers-stat">
+                <div class="stat-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-value" id="total-followers"><i style="font-size: medium;"
+                        class="fas fa-spinner fa-spin"></i></div>
+                <div class="stat-label">Followers</div>
+            </div>
+
+            <div class="stat-card" id="streak-stat">
+                <div class="stat-icon">
+                    <i class="fas fa-fire"></i>
+                </div>
+                <div class="stat-value" id="current-streak"><i style="font-size: medium;"
+                        class="fas fa-spinner fa-spin"></i></div>
+                <div class="stat-label">Current Streak</div>
+                <div class="streak-badge" id="streak-badge">
+                    <i class="fas fa-bolt"></i>
+                    <span></span>
+                </div>
+            </div>
+
+            <div class="stat-card" id="total-contributions">
+                <div class="stat-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="stat-value" id="total-contributions-value"><i style="font-size: medium;"
+                        class="fas fa-spinner fa-spin"></i></div>
+                <div class="stat-label">Total Contributions</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <div class="stat-value" id="total-lines"><i style="font-size: medium;"
+                        class="fas fa-spinner fa-spin"></i></div>
+                <div class="stat-label">Lines of Code</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="stat-value" id="total-stars"><i style="font-size: medium;"
+                        class="fas fa-spinner fa-spin"></i></div>
+                <div class="stat-label">Total Stars</div>
+            </div>
+        </div>
+
+        <!-- Streak Visualization -->
+        <div class="stat-card" style="grid-column: 1 / -1; margin-top: 10px;">
+            <div class="analytics-title">
+                <i class="fas fa-calendar-alt"></i>
+                <span>GitHub Contribution Streak</span>
+            </div>
+            <div class="streak-image" id="streak-visualization">
+                <img src="https://camo.githubusercontent.com/011e97187353589d498384d3befb2fce7343976b792ad5892218a2ef135ac92d/68747470733a2f2f6769746875622d726561646d652d73747265616b2d73746174732e6865726f6b756170702e636f6d2f3f757365723d6d757366697175726a6168696e267468656d653d6461726b26686964655f626f726465723d74727565266261636b67726f756e643d306431313137267374726f6b653d3030666638382672696e673d30306666383826666972653d303066663838266375727253747265616b4c6162656c3d303066663838"
+                    alt="GitHub Streak Stats" onload="extractStreakFromImage()" onerror="handleStreakImageError()">
+            </div>
+        </div>
+
+        <br>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab active" data-tab="repositories">
+                <i class="fas fa-code"></i>
+                <span>Repositories</span>
+            </button>
+            <button class="tab" data-tab="analytics">
+                <i class="fas fa-chart-bar"></i>
+                <span>Analytics</span>
+            </button>
+        </div>
+
+        <!-- Repositories Tab -->
+        <div class="tab-content active" id="repositories-tab">
+            <div class="filter-container">
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">
+                        <i class="fas fa-layer-group"></i>
+                        <span>All</span>
+                    </button>
+                    <button class="filter-btn" data-filter="stars">
+                        <i class="fas fa-star"></i>
+                        <span>Most Stars</span>
+                    </button>
+                    <button class="filter-btn" data-filter="updated">
+                        <i class="fas fa-history"></i>
+                        <span>Recently Updated</span>
+                    </button>
+                </div>
+
+                <div class="search-box">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-input" id="repo-search" placeholder="Search repositories...">
+                </div>
+            </div>
+
+            <div class="repos-grid" id="repos-container">
+                <div class="loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Loading repositories...</p>
+                </div>
+            </div>
+
+            <div class="load-more-container">
+                <button class="load-more-btn hidden" id="load-more">
+                    <i class="fas fa-chevron-down"></i>
+                    <span class="text">Load More</span>
+                    <span class="count">0</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Analytics Tab -->
+        <div class="tab-content" id="analytics-tab">
+            <div class="analytics-grid">
+                <div class="analytics-card">
+                    <h3 class="analytics-title">
+                        <i class="fas fa-code"></i>
+                        <span>Top Languages</span>
+                    </h3>
+                    <div class="language-list" id="language-list">
+                        <div class="loading">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Loading languages...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="analytics-card">
+                    <h3 class="analytics-title">
+                        <i class="fas fa-chart-pie"></i>
+                        <span>Repository Stats</span>
+                    </h3>
+                    <div id="repo-stats">
+                        <div class="loading">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Loading stats...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal" id="repo-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="repo-modal-title">Repository Details</h3>
+                <div class="modal-actions">
+                    <button class="modal-action-btn" id="repo-fullscreen-toggle" data-tooltip="Fullscreen">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                    <button class="modal-close" id="repo-modal-close">&times;</button>
+                </div>
+            </div>
+            <div class="modal-body" id="repo-modal-body">
+                Loading...
+            </div>
+            <div class="modal-footer">
+                <a href="#" target="_blank" class="modal-btn" id="repo-modal-link">
+                    <i class="fas fa-external-link-alt"></i>
+                    Open Repository
+                </a>
+                <button class="modal-btn outline" id="repo-modal-close-btn">Close</button>
+                <button class="modal-btn" id="explore-files-btn">
+                    <i class="fas fa-folder-open"></i>
+                    Explore Files
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="followers-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Followers</h3>
+                <div class="modal-actions">
+                    <button class="modal-action-btn" id="followers-fullscreen-toggle" data-tooltip="Fullscreen">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                    <button class="modal-close" id="followers-modal-close">&times;</button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="followers-list" id="followers-list">
+                    <div class="loading">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Loading followers...</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn outline" id="followers-modal-close-btn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- File Explorer Modal -->
+    <div class="modal" id="file-explorer-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">
+                    <i class="fas fa-folder-open"></i>
+                    <span id="file-explorer-title">Repository Files</span>
+                </h3>
+                <div class="modal-actions">
+                    <button class="modal-action-btn" id="file-explorer-fullscreen-toggle" data-tooltip="Fullscreen">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                    <button class="modal-close" id="file-explorer-close">&times;</button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="file-explorer">
+                    <div class="file-explorer-header">
+                        <div class="file-explorer-title">
+                            <i class="fas fa-code-branch"></i>
+                            <span id="current-repo-name">Loading...</span>
+                        </div>
+                        <div class="file-explorer-actions">
+                            <button class="action-btn" id="refresh-files" title="Refresh">
+                                <i class="fas fa-sync-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="file-explorer-breadcrumb" id="breadcrumb">
+                        <div class="breadcrumb-item" data-path="">
+                            <i class="fas fa-home"></i>
+                            <span>Root</span>
+                        </div>
+                    </div>
+                    
+                    <div class="files-container" id="files-container">
+                        <div class="loading-files">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Loading files...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn outline" id="file-explorer-close-btn">
+                    <i class="fas fa-times"></i>
+                    Close
+                </button>
+                <a href="#" target="_blank" class="modal-btn" id="view-on-github">
+                    <i class="fab fa-github"></i>
+                    View on GitHub
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Code Preview Modal -->
+    <div class="modal" id="code-preview-modal">
+        <div class="modal-content" style="max-width: 1000px;">
+            <div class="modal-header">
+                <h3 class="modal-title">
+                    <i class="fas fa-file-code"></i>
+                    <span id="code-preview-title">Code Preview</span>
+                </h3>
+                <div class="modal-actions">
+                    <button class="modal-action-btn" id="copy-code-btn" data-tooltip="Copy Code">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                    <button class="modal-action-btn" id="code-fullscreen-toggle" data-tooltip="Fullscreen">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                    <button class="modal-close" id="code-preview-close">&times;</button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="code-preview-container">
+                    <div class="code-preview-header">
+                        <div class="code-preview-info">
+                            <div id="code-file-name" style="font-weight: 600; color: #fff;"></div>
+                            <div class="code-language-badge" id="code-language"></div>
+                            <div class="code-size" id="code-file-size"></div>
+                        </div>
+                        <div class="code-actions">
+                            <button class="code-action-btn download-code" id="download-code-btn">
+                                <i class="fas fa-download"></i>
+                                Download
+                            </button>
+                        </div>
+                    </div>
+                    <div class="code-content">
+                        <pre><code id="code-content" class="hljs"></code></pre>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn outline" id="code-preview-close-btn">
+                    <i class="fas fa-times"></i>
+                    Close
+                </button>
+                <button class="modal-btn" id="code-preview-back-btn">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Files
+                </button>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/html.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/shell.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/markdown.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/yaml.min.js"></script>
+    <script>
+        const username = 'musfiqurjahin';
+let allRepos = [];
+let filteredRepos = [];
+let currentPage = 1;
+const reposPerPage = 9;
+let currentStreak = 0;
+let currentRepo = null;
+let currentPath = '';
+let currentFiles = [];
+let currentCodeFile = null;
+let hljsInitialized = false;
+
+//Follow button
+const followBtn = document.getElementById('follow-btn');
+// Dynamically set the href using the username variable
+followBtn.href = `https://github.com/${username}`;
+
+// Initialize Highlight.js
+function initHighlightJS() {
+    if (!hljsInitialized) {
+        hljs.highlightAll();
+        hljsInitialized = true;
+    }
+}
+
+// Fullscreen toggle functionality
+function setupFullscreenToggle(modalId, toggleBtnId) {
+    const modal = document.getElementById(modalId);
+    const toggleBtn = document.getElementById(toggleBtnId);
+    
+    if (!modal || !toggleBtn) return;
+    
+    toggleBtn.addEventListener('click', () => {
+        modal.classList.toggle('fullscreen');
+        const icon = toggleBtn.querySelector('i');
+        if (modal.classList.contains('fullscreen')) {
+            icon.className = 'fas fa-compress';
+            toggleBtn.setAttribute('data-tooltip', 'Exit Fullscreen');
+        } else {
+            icon.className = 'fas fa-expand';
+            toggleBtn.setAttribute('data-tooltip', 'Fullscreen');
+        }
+    });
+}
+
+// Set current year in footer (removed from code)
+// document.getElementById('current-year').textContent = new Date().getFullYear();
+
+window.onload = async function () {
+    try {
+        await loadAllData();
+        initHighlightJS();
+        setupFullscreenToggles();
+    } catch (error) {
+        console.error('Error loading data:', error);
+        showError('Failed to load data. Please check your connection.');
+    }
+};
+
+function setupFullscreenToggles() {
+    setupFullscreenToggle('repo-modal', 'repo-fullscreen-toggle');
+    setupFullscreenToggle('followers-modal', 'followers-fullscreen-toggle');
+    setupFullscreenToggle('file-explorer-modal', 'file-explorer-fullscreen-toggle');
+    setupFullscreenToggle('code-preview-modal', 'code-fullscreen-toggle');
+}
+
+async function loadAllData() {
+    await loadUserData();
+    await loadRepositories();
+
+    updateProfileUI();
+    updateStatsUI();
+    filterAndDisplayRepos();
+    updateAnalytics();
+    setupEventListeners();
+    updateLoadMoreButton();
+}
+
+async function loadUserData() {
+    try {
+        const response = await fetch(`https://api.github.com/users/${username}`);
+        if (!response.ok) throw new Error('API Error');
+        const data = await response.json();
+        window.userData = data;
+    } catch (error) {
+        console.error('Error loading user data:', error);
+        window.userData = {
+            avatar_url: `https://github.com/${username}.png`,
+            name: 'Musfiqur Jahin',
+            login: username,
+            bio: 'Software Developer | GitHub Enthusiast | Passionate about creating impactful solutions with modern technologies',
+            location: 'Bangladesh',
+            blog: '',
+            created_at: '2020-01-01T00:00:00Z',
+            public_repos: 0,
+            followers: 0
+        };
+    }
+}
+
+async function loadRepositories() {
+    try {
+        const response = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=100`);
+        if (!response.ok) throw new Error('API Error');
+        const data = await response.json();
+        allRepos = data;
+    } catch (error) {
+        console.error('Error loading repositories:', error);
+        allRepos = [];
+    }
+}
+
+async function fetchGitHubStreak() {
+    try {
+        const eventsResponse = await fetch(`https://api.github.com/users/${username}/events`);
+        if (eventsResponse.ok) {
+            const events = await eventsResponse.json();
+            const streak = calculateStreakFromEvents(events);
+            if (streak > 0) {
+                return streak;
+            }
+        }
+
+        return calculateStreakFromRepos();
+
+    } catch (error) {
+        console.error('Error fetching streak:', error);
+        return calculateStreakFromRepos();
+    }
+}
+
+function calculateStreakFromEvents(events) {
+    if (!events || events.length === 0) return 0;
+
+    const contributionDates = new Set();
+    const now = new Date();
+
+    events.forEach(event => {
+        if (event.type === 'PushEvent' || event.type === 'CreateEvent' ||
+            event.type === 'PullRequestEvent' || event.type === 'IssuesEvent') {
+            const eventDate = new Date(event.created_at);
+            const dateStr = eventDate.toISOString().split('T')[0];
+            contributionDates.add(dateStr);
+        }
+    });
+
+    let streak = 0;
+    let currentDate = new Date(now);
+
+    for (let i = 0; i < 365; i++) {
+        const dateStr = currentDate.toISOString().split('T')[0];
+
+        if (contributionDates.has(dateStr)) {
+            streak++;
+        } else {
+            if (i === 0) {
+                continue;
+            } else {
+                break;
+            }
+        }
+
+        currentDate.setDate(currentDate.getDate() - 1);
+    }
+
+    return streak;
+}
+
+function calculateStreakFromRepos() {
+    if (allRepos.length === 0) return 0;
+
+    const now = new Date();
+    const recentRepos = [...allRepos]
+        .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
+        .slice(0, 20);
+
+    const recentDates = recentRepos.map(repo => {
+        const date = new Date(repo.updated_at);
+        return date.toISOString().split('T')[0];
+    });
+
+    const uniqueDates = [...new Set(recentDates)];
+
+    let streak = 0;
+    let currentDate = new Date(now);
+
+    for (let i = 0; i < 30; i++) {
+        const dateStr = currentDate.toISOString().split('T')[0];
+
+        if (uniqueDates.includes(dateStr)) {
+            streak++;
+        } else if (i === 0) {
+            continue;
+        } else {
+            break;
+        }
+
+        currentDate.setDate(currentDate.getDate() - 1);
+    }
+
+    return streak;
+}
+
+async function updateStreakInfo() {
+    currentStreak = await fetchGitHubStreak();
+    updateStreakUI();
+}
+
+function updateStreakUI() {
+    const streakValue = document.getElementById('current-streak');
+    const streakBadge = document.getElementById('streak-badge');
+
+    streakValue.textContent = currentStreak;
+
+    if (currentStreak >= 7) {
+        streakBadge.innerHTML = `<i class="fas fa-fire"></i><span>${currentStreak} day streak!</span>`;
+        streakBadge.style.background = 'rgba(16, 185, 129, 0.1)';
+        streakBadge.style.color = 'var(--success)';
+    } else if (currentStreak >= 3) {
+        streakBadge.innerHTML = `<i class="fas fa-bolt"></i><span>${currentStreak} day streak</span>`;
+        streakBadge.style.background = 'rgba(245, 158, 11, 0.1)';
+        streakBadge.style.color = 'var(--warning)';
+    } else if (currentStreak > 0) {
+        streakBadge.innerHTML = `<i class="fas fa-bolt"></i><span>${currentStreak} day streak</span>`;
+        streakBadge.style.background = 'rgba(37, 99, 235, 0.1)';
+        streakBadge.style.color = 'var(--primary-light)';
+    } else {
+        streakBadge.innerHTML = `<i class="fas fa-bolt"></i><span>Start coding!</span>`;
+        streakBadge.style.background = 'rgba(255, 255, 255, 0.1)';
+        streakBadge.style.color = 'var(--gray)';
+    }
+}
+
+function extractStreakFromImage() {
+    setTimeout(async () => {
+        await updateStreakInfo();
+    }, 1000);
+}
+
+function handleStreakImageError() {
+    console.log('Streak image failed to load, using API calculation');
+    updateStreakInfo();
+}
+
+function updateProfileUI() {
+    if (!window.userData) return;
+
+    const user = window.userData;
+
+    const avatarPlaceholder = document.getElementById('avatar-placeholder');
+    avatarPlaceholder.innerHTML = `<img src="${user.avatar_url}" alt="${user.name || user.login}" style="width: 100%; height: 100%; object-fit: cover;">`;
+
+    document.getElementById('profile-name').textContent = user.name || user.login;
+    document.getElementById('profile-username').innerHTML = `<i class="fab fa-github"></i><span>@${user.login}</span>`;
+    document.getElementById('profile-bio').textContent = user.bio || 'No bio available';
+
+
+    const locationEl = document.getElementById('location');
+    const websiteEl = document.getElementById('website');
+    const joinedEl = document.getElementById('joined-date');
+
+    if (user.location) {
+        locationEl.innerHTML = `<i class="fas fa-map-marker-alt"></i><span>${user.location}</span>`;
+    } else {
+        locationEl.innerHTML = `<i class="fas fa-map-marker-alt"></i><span>Location not set</span>`;
+    }
+
+    if (user.blog) {
+        const blogUrl = user.blog.startsWith('http') ? user.blog : `https://${user.blog}`;
+        websiteEl.innerHTML = `<i class="fas fa-link"></i><a href="${blogUrl}" target="_blank" style="color: var(--primary-light); text-decoration: none; transition: color 0.2s;">Website</a>`;
+    } else {
+        websiteEl.innerHTML = `<i class="fas fa-link"></i><span>No website</span>`;
+    }
+
+    if (user.created_at) {
+        const joinDate = new Date(user.created_at).toLocaleDateString('en-US', {
+            month: 'long',
+            year: 'numeric'
+        });
+        joinedEl.innerHTML = `<i class="fas fa-calendar-alt"></i><span>Joined ${joinDate}</span>`;
+    }
+}
+
+function updateStatsUI() {
+    if (!window.userData) return;
+
+    const user = window.userData;
+
+    document.getElementById('total-repos').textContent = user.public_repos || allRepos.length;
+    document.getElementById('total-followers').textContent = user.followers || 0;
+
+    const totalStars = allRepos.reduce((sum, repo) => sum + (repo.stargazers_count || 0), 0);
+    document.getElementById('total-stars').textContent = totalStars;
+
+    const totalContributions = calculateTotalContributions();
+    document.getElementById('total-contributions-value').textContent = totalContributions;
+
+    const totalLines = calculateTotalLinesOfCode();
+    document.getElementById('total-lines').textContent = totalLines;
+
+    updateStreakInfo();
+}
+
+function calculateTotalContributions() {
+    let totalCommits = 0;
+
+    allRepos.forEach(repo => {
+        const daysSinceUpdate = Math.floor((new Date() - new Date(repo.updated_at)) / (1000 * 60 * 60 * 24));
+        const isActive = daysSinceUpdate < 90;
+
+        if (isActive) {
+            totalCommits += Math.floor(repo.size / 100) + 5;
+        } else {
+            totalCommits += Math.floor(repo.size / 500) + 1;
+        }
+    });
+
+    return Math.max(totalCommits, 42);
+}
+
+function calculateTotalLinesOfCode() {
+    const totalSize = allRepos.reduce((sum, repo) => sum + (repo.size || 0), 0);
+    const estimatedLines = Math.round(totalSize * 75);
+    return estimatedLines.toLocaleString();
+}
+
+function filterAndDisplayRepos() {
+    filteredRepos = [...allRepos].sort((a, b) =>
+        new Date(b.updated_at) - new Date(a.updated_at)
+    );
+
+    currentPage = 1;
+    displayReposPage();
+}
+
+function displayReposPage() {
+    const reposContainer = document.getElementById('repos-container');
+
+    if (allRepos.length === 0) {
+        reposContainer.innerHTML = `
+                    <div class="error-state" style="grid-column: 1 / -1;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>No repositories found</h3>
+                        <p>Could not load repositories</p>
+                    </div>
+                `;
+        updateLoadMoreButton();
+        return;
+    }
+
+    const startIndex = (currentPage - 1) * reposPerPage;
+    const endIndex = Math.min(startIndex + reposPerPage, filteredRepos.length);
+
+    let reposHTML = '';
+
+    for (let i = startIndex; i < endIndex; i++) {
+        const repo = filteredRepos[i];
+        reposHTML += createRepoCardHTML(repo);
+    }
+
+    reposContainer.innerHTML = reposHTML;
+
+    document.querySelectorAll('.repo-card').forEach((card, index) => {
+        card.addEventListener('click', (e) => {
+            if (!e.target.closest('.repo-actions')) {
+                const repoIndex = startIndex + index;
+                openRepoModal(filteredRepos[repoIndex]);
+            }
+        });
+    });
+
+    updateLoadMoreButton();
+}
+
+function loadMoreRepos() {
+    const reposContainer = document.getElementById('repos-container');
+    const startIndex = (currentPage - 1) * reposPerPage;
+    const endIndex = Math.min(startIndex + reposPerPage, filteredRepos.length);
+
+    for (let i = startIndex; i < endIndex; i++) {
+        const repo = filteredRepos[i];
+        const repoCard = document.createElement('div');
+        repoCard.className = 'repo-card';
+        repoCard.innerHTML = createRepoCardHTML(repo);
+        reposContainer.appendChild(repoCard);
+
+        repoCard.addEventListener('click', (e) => {
+            if (!e.target.closest('.repo-actions')) {
+                openRepoModal(repo);
+            }
+        });
+    }
+
+    updateLoadMoreButton();
+}
+
+function updateLoadMoreButton() {
+    const loadMoreBtn = document.getElementById('load-more');
+    const endIndex = Math.min(currentPage * reposPerPage, filteredRepos.length);
+    const remaining = filteredRepos.length - endIndex;
+
+    if (remaining > 0) {
+        loadMoreBtn.classList.remove('hidden');
+        loadMoreBtn.querySelector('.text').textContent = 'Load More';
+        loadMoreBtn.querySelector('.count').textContent = remaining;
+        loadMoreBtn.querySelector('i').className = 'fas fa-chevron-down';
+    } else {
+        loadMoreBtn.classList.add('hidden');
+    }
+}
+
+function createRepoCardHTML(repo) {
+    const description = repo.description ?
+        (repo.description.length > 120 ? repo.description.substring(0, 120) + '...' : repo.description) :
+        'No description provided';
+
+    const languageColor = getLanguageColor(repo.language);
+
+    const updatedDate = new Date(repo.updated_at);
+    const now = new Date();
+    const diffTime = Math.abs(now - updatedDate);
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    let updatedText;
+
+    if (diffDays === 0) {
+        updatedText = 'Today';
+    } else if (diffDays === 1) {
+        updatedText = 'Yesterday';
+    } else if (diffDays < 7) {
+        updatedText = `${diffDays} days ago`;
+    } else if (diffDays < 30) {
+        updatedText = `${Math.floor(diffDays / 7)} weeks ago`;
+    } else {
+        updatedText = updatedDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    }
+
+    const createdDate = new Date(repo.created_at);
+    const createdText = createdDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+
+    const sizeInKB = repo.size ? Math.round(repo.size / 1024 * 10) / 10 : 0;
+    const sizeText = sizeInKB > 1024 ?
+        `${Math.round(sizeInKB / 1024 * 10) / 10} MB` :
+        `${sizeInKB} KB`;
+
+    const openIssues = repo.open_issues_count || 0;
+    const hasIssues = openIssues > 0;
+
+    const topicsHTML = repo.topics && repo.topics.length > 0 ?
+        `<div class="repo-topics">
+                    ${repo.topics.slice(0, 3).map(topic => `<span class="repo-topic" data-topic="${topic}">${topic}</span>`).join('')}
+                    ${repo.topics.length > 3 ? `<span class="repo-topic">+${repo.topics.length - 3}</span>` : ''}
+                </div>` : '';
+
+    return `
+                <div class="repo-card">
+                    <div class="repo-actions">
+                        <button class="action-btn explore" data-repo-name="${repo.name}" title="Explore Files">
+                            <i class="fas fa-folder-open"></i>
+                        </button>
+                    </div>
+                    <div class="repo-header">
+                        <div class="repo-name-container">
+                            <div class="repo-name">${repo.name}</div>
+                        </div>
+                        <span class="repo-visibility">${repo.private ? 'Private' : 'Public'}</span>
+                    </div>
+                    <p class="repo-desc">${description}</p>
+                    
+                    ${topicsHTML}
+                    
+                    <div class="repo-meta">
+                        <div class="repo-meta-item" title="Last Updated">
+                            <i class="fas fa-calendar"></i>
+                            <span>${updatedText}</span>
+                        </div>
+                        <div class="repo-meta-item" title="Repository Size">
+                            <i class="fas fa-database"></i>
+                            <span>${sizeText}</span>
+                        </div>
+                        ${repo.license && repo.license.name ? `
+                            <div class="repo-meta-item" title="License">
+                                <i class="fas fa-balance-scale"></i>
+                                <span>${repo.license.name}</span>
+                            </div>
+                        ` : ''}
+                        ${hasIssues ? `
+                            <div class="repo-meta-item" title="Open Issues">
+                                <i class="fas fa-exclamation-circle"></i>
+                                <span>${openIssues}</span>
+                            </div>
+                        ` : ''}
+                    </div>
+                    
+                    <div class="repo-footer">
+                        <div class="repo-language">
+                            ${repo.language ? `
+                                <div class="language-color" style="background-color: ${languageColor}"></div>
+                                <span>${repo.language}</span>
+                            ` : '<span style="color: var(--gray);">No language Specified</span>'}
+                        </div>
+                        <div class="repo-stats">
+                            <div class="repo-stat" title="Stars">
+                                <i class="fas fa-star"></i>
+                                <span>${repo.stargazers_count || 0}</span>
+                            </div>
+                            <div class="repo-stat" title="Forks">
+                                <i class="fas fa-code-branch"></i>
+                                <span>${repo.forks_count || 0}</span>
+                            </div>
+                            <div class="repo-stat" title="Watchers">
+                                <i class="fas fa-eye"></i>
+                                <span>${repo.watchers_count || 0}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+}
+
+function openRepoModal(repo) {
+    currentRepo = repo;
+    const modal = document.getElementById('repo-modal');
+    const title = document.getElementById('repo-modal-title');
+    const body = document.getElementById('repo-modal-body');
+    const link = document.getElementById('repo-modal-link');
+
+    title.textContent = repo.name;
+    link.href = repo.html_url;
+
+    const createdDate = new Date(repo.created_at);
+    const updatedDate = new Date(repo.updated_at);
+    const createdText = createdDate.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        weekday: 'long'
+    });
+    const updatedText = updatedDate.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        weekday: 'long'
+    });
+
+    const languageColor = getLanguageColor(repo.language);
+    const sizeInKB = repo.size || 0;
+    const sizeInMB = (sizeInKB / 1024).toFixed(2);
+    const sizeText = sizeInKB > 1024 ? `${sizeInMB} MB` : `${sizeInKB} KB`;
+
+    const daysSinceUpdate = Math.floor((new Date() - updatedDate) / (1000 * 60 * 60 * 24));
+    const activityLevel = daysSinceUpdate < 7 ? 'High' : daysSinceUpdate < 30 ? 'Medium' : 'Low';
+
+    const topicsHTML = repo.topics && repo.topics.length > 0 ?
+        `<div class="modal-topics">
+                    <div class="repo-detail-label">
+                        <i class="fas fa-tags"></i>
+                        Topics
+                    </div>
+                    ${repo.topics.map(topic => `<span class="modal-topic" data-topic="${topic}">${topic}</span>`).join('')}
+                </div>` : '';
+
+    body.innerHTML = `
+                <div class="repo-details-header">
+                    <div class="repo-main-info">
+                        <h2 class="repo-name-large">${repo.name}</h2>
+                        <span class="repo-visibility-large">${repo.private ? 'Private' : 'Public'} Repository</span>
+                    </div>
+                </div>
+                
+                <p class="repo-description">${repo.description || 'No description available for this repository.'}</p>
+                
+                <div class="repo-stats-grid">
+                    <div class="repo-stat-item">
+                        <div class="repo-stat-value">${repo.stargazers_count || 0}</div>
+                        <div class="repo-stat-label">Stars</div>
+                    </div>
+                    <div class="repo-stat-item">
+                        <div class="repo-stat-value">${repo.forks_count || 0}</div>
+                        <div class="repo-stat-label">Forks</div>
+                    </div>
+                    <div class="repo-stat-item">
+                        <div class="repo-stat-value">${repo.watchers_count || 0}</div>
+                        <div class="repo-stat-label">Watchers</div>
+                    </div>
+                    <div class="repo-stat-item">
+                        <div class="repo-stat-value">${repo.open_issues_count || 0}</div>
+                        <div class="repo-stat-label">Open Issues</div>
+                    </div>
+                </div>
+                
+                <div class="repo-details-grid">
+                    <div class="repo-detail-item">
+                        <div class="repo-detail-label">
+                            <i class="fas fa-code"></i>
+                            Primary Language
+                        </div>
+                        <div class="repo-detail-value" style="display: flex; align-items: center; gap: 10px;">
+                            <div class="language-color" style="background-color: ${languageColor}; width: 16px; height: 16px;"></div>
+                            ${repo.language || 'Not specified'}
+                        </div>
+                    </div>
+                    
+                    <div class="repo-detail-item">
+                        <div class="repo-detail-label">
+                            <i class="fas fa-database"></i>
+                            Size
+                        </div>
+                        <div class="repo-detail-value">${sizeText}</div>
+                    </div>
+                    
+                    <div class="repo-detail-item">
+                        <div class="repo-detail-label">
+                            <i class="fas fa-calendar-plus"></i>
+                            Created
+                        </div>
+                        <div class="repo-detail-value">${createdText}</div>
+                    </div>
+                    
+                    <div class="repo-detail-item">
+                        <div class="repo-detail-label">
+                            <i class="fas fa-calendar-check"></i>
+                            Last Updated
+                        </div>
+                        <div class="repo-detail-value">${updatedText}</div>
+                    </div>
+                    
+                    ${repo.license && repo.license.name ? `
+                        <div class="repo-detail-item">
+                            <div class="repo-detail-label">
+                                <i class="fas fa-balance-scale"></i>
+                                License
+                            </div>
+                            <div class="repo-detail-value">${repo.license.name}</div>
+                        </div>
+                    ` : ''}
+                    
+                    <div class="repo-detail-item">
+                        <div class="repo-detail-label">
+                            <i class="fas fa-chart-line"></i>
+                            Activity Level
+                        </div>
+                        <div class="repo-detail-value" style="color: ${activityLevel === 'High' ? 'var(--success)' : activityLevel === 'Medium' ? 'var(--warning)' : 'var(--gray)'}">
+                            ${activityLevel}
+                        </div>
+                    </div>
+                    
+                    <div class="repo-detail-item">
+                        <div class="repo-detail-label">
+                            <i class="fas fa-shield-alt"></i>
+                            Default Branch
+                        </div>
+                        <div class="repo-detail-value">${repo.default_branch || 'main'}</div>
+                    </div>
+                    
+                    <div class="repo-detail-item">
+                        <div class="repo-detail-label">
+                            <i class="fas fa-archive"></i>
+                            Archived
+                        </div>
+                        <div class="repo-detail-value" style="color: ${repo.archived ? 'var(--warning)' : 'var(--success)'}">
+                            ${repo.archived ? 'Yes' : 'No'}
+                        </div>
+                    </div>
+                    
+                    <div class="repo-detail-item">
+                        <div class="repo-detail-label">
+                            <i class="fas fa-code-fork"></i>
+                            Fork
+                        </div>
+                        <div class="repo-detail-value" style="color: ${repo.fork ? 'var(--warning)' : 'var(--success)'}">
+                            ${repo.fork ? 'Yes' : 'No'}
+                        </div>
+                    </div>
+                </div>
+                
+                ${topicsHTML}
+                
+                ${repo.homepage ? `
+                    <div class="repo-detail-item" style="margin-top: 20px;">
+                        <div class="repo-detail-label">
+                            <i class="fas fa-globe"></i>
+                            Homepage
+                        </div>
+                        <a href="${repo.homepage}" target="_blank" style="color: var(--primary-light); text-decoration: none; font-size: 1.1rem; transition: color 0.2s;">${repo.homepage}</a>
+                    </div>
+                ` : ''}
+            `;
+
+    modal.classList.add('active');
+}
+
+async function openFileExplorer(repoName) {
+    currentRepo = allRepos.find(r => r.name === repoName);
+    if (!currentRepo) return;
+    
+    currentPath = '';
+    currentFiles = [];
+    
+    const modal = document.getElementById('file-explorer-modal');
+    const title = document.getElementById('file-explorer-title');
+    const repoNameEl = document.getElementById('current-repo-name');
+    const viewOnGithubBtn = document.getElementById('view-on-github');
+    
+    title.textContent = `Exploring: ${repoName}`;
+    repoNameEl.textContent = repoName;
+    viewOnGithubBtn.href = currentRepo.html_url;
+    
+    modal.classList.add('active');
+    
+    await loadRepositoryFiles(repoName);
+}
+
+async function loadRepositoryFiles(repoName, path = '') {
+    currentPath = path;
+    const filesContainer = document.getElementById('files-container');
+    
+    filesContainer.innerHTML = `
+        <div class="loading-files">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Loading files...</p>
+        </div>
+    `;
+    
+    try {
+        const url = path ? 
+            `https://api.github.com/repos/${username}/${repoName}/contents/${path}` :
+            `https://api.github.com/repos/${username}/${repoName}/contents`;
+        
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Failed to load files');
+        
+        const contents = await response.json();
+        currentFiles = Array.isArray(contents) ? contents : [contents];
+        
+        renderFilesList();
+        updateBreadcrumb(path);
+    } catch (error) {
+        console.error('Error loading repository files:', error);
+        filesContainer.innerHTML = `
+            <div class="error-state">
+                <i class="fas fa-exclamation-triangle"></i>
+                <p>Failed to load files</p>
+                <button class="retry-btn" onclick="loadRepositoryFiles('${repoName}', '${path}')">
+                    <i class="fas fa-redo"></i> Retry
+                </button>
+            </div>
+        `;
+    }
+}
+
+function renderFilesList() {
+    const filesContainer = document.getElementById('files-container');
+    
+    if (!currentFiles || currentFiles.length === 0) {
+        filesContainer.innerHTML = `
+            <div class="empty-folder">
+                <i class="fas fa-folder-open"></i>
+                <p>This folder is empty</p>
+            </div>
+        `;
+        return;
+    }
+    
+    // Sort: directories first, then files
+    const sortedFiles = [...currentFiles].sort((a, b) => {
+        if (a.type === 'dir' && b.type !== 'dir') return -1;
+        if (a.type !== 'dir' && b.type === 'dir') return 1;
+        return a.name.localeCompare(b.name);
+    });
+    
+    let filesHTML = '<div class="files-list">';
+    
+    sortedFiles.forEach(item => {
+        const isDir = item.type === 'dir';
+        const icon = isDir ? 'fa-folder' : getFileIcon(item.name);
+        const iconColor = isDir ? 'var(--warning)' : 'var(--primary-light)';
+        const size = item.size ? formatFileSize(item.size) : '—';
+        
+        filesHTML += `
+            <div class="file-item" data-type="${item.type}" data-name="${item.name}" data-path="${item.path}">
+                <div class="file-icon" style="color: ${iconColor};">
+                    <i class="fas ${icon}"></i>
+                </div>
+                <div class="file-name">${item.name}</div>
+                <div class="file-size">${size}</div>
+            </div>
+        `;
+    });
+    
+    filesHTML += '</div>';
+    filesContainer.innerHTML = filesHTML;
+    
+    // Add click event listeners
+    document.querySelectorAll('.file-item').forEach(item => {
+        item.addEventListener('click', async (e) => {
+            const type = item.getAttribute('data-type');
+            const name = item.getAttribute('data-name');
+            const path = item.getAttribute('data-path');
+            
+            if (type === 'dir') {
+                await loadRepositoryFiles(currentRepo.name, path);
+            } else {
+                await previewFileWithCode(name, path);
+            }
+        });
+    });
+}
+
+async function previewFileWithCode(filename, filepath) {
+    currentCodeFile = { filename, filepath };
+    const modal = document.getElementById('code-preview-modal');
+    const title = document.getElementById('code-preview-title');
+    const fileNameEl = document.getElementById('code-file-name');
+    const codeLanguageEl = document.getElementById('code-language');
+    const codeSizeEl = document.getElementById('code-file-size');
+    const codeContentEl = document.getElementById('code-content');
+    
+    title.textContent = `Code Preview: ${filename}`;
+    fileNameEl.textContent = filename;
+    
+    modal.classList.add('active');
+    
+    try {
+        const response = await fetch(`https://api.github.com/repos/${username}/${currentRepo.name}/contents/${filepath}`);
+        if (!response.ok) throw new Error('Failed to load file');
+        
+        const fileData = await response.json();
+        
+        // Decode base64 content
+        const content = atob(fileData.content);
+        const extension = filename.split('.').pop().toLowerCase();
+        
+        // Set file size
+        codeSizeEl.textContent = formatFileSize(fileData.size);
+        
+        // Detect language for syntax highlighting
+        const language = detectLanguage(filename, extension);
+        codeLanguageEl.textContent = language;
+        
+        // Set code content
+        codeContentEl.textContent = content;
+        
+        // Apply syntax highlighting
+        const hljsLanguage = getHighlightJSLanguage(language, extension);
+        if (hljs.getLanguage(hljsLanguage)) {
+            codeContentEl.className = `hljs language-${hljsLanguage}`;
+        } else {
+            codeContentEl.className = 'hljs';
+        }
+        
+        hljs.highlightElement(codeContentEl);
+        
+        // Update download button
+        document.getElementById('download-code-btn').onclick = () => {
+            downloadFile(content, filename);
+        };
+        
+    } catch (error) {
+        console.error('Error loading file content:', error);
+        codeContentEl.textContent = `// Error loading file content\n// ${error.message}`;
+        codeContentEl.className = 'hljs language-javascript';
+        hljs.highlightElement(codeContentEl);
+    }
+}
+
+function detectLanguage(filename, extension) {
+    const languageMap = {
+        'js': 'JavaScript',
+        'jsx': 'JavaScript React',
+        'ts': 'TypeScript',
+        'tsx': 'TypeScript React',
+        'py': 'Python',
+        'java': 'Java',
+        'cpp': 'C++',
+        'c': 'C',
+        'cs': 'C#',
+        'php': 'PHP',
+        'rb': 'Ruby',
+        'go': 'Go',
+        'rs': 'Rust',
+        'swift': 'Swift',
+        'kt': 'Kotlin',
+        'dart': 'Dart',
+        'html': 'HTML',
+        'htm': 'HTML',
+        'css': 'CSS',
+        'scss': 'SCSS',
+        'sass': 'Sass',
+        'less': 'Less',
+        'json': 'JSON',
+        'xml': 'XML',
+        'yml': 'YAML',
+        'yaml': 'YAML',
+        'md': 'Markdown',
+        'txt': 'Plain Text',
+        'sh': 'Shell',
+        'bash': 'Bash',
+        'sql': 'SQL',
+        'vue': 'Vue',
+        'dart': 'Dart'
+    };
+    
+    return languageMap[extension] || extension.toUpperCase();
+}
+
+function getHighlightJSLanguage(language, extension) {
+    const langMap = {
+        'javascript': 'javascript',
+        'typescript': 'typescript',
+        'python': 'python',
+        'java': 'java',
+        'c++': 'cpp',
+        'c': 'c',
+        'c#': 'csharp',
+        'php': 'php',
+        'ruby': 'ruby',
+        'go': 'go',
+        'rust': 'rust',
+        'swift': 'swift',
+        'kotlin': 'kotlin',
+        'html': 'html',
+        'css': 'css',
+        'scss': 'scss',
+        'json': 'json',
+        'xml': 'xml',
+        'yaml': 'yaml',
+        'markdown': 'markdown',
+        'shell': 'shell',
+        'bash': 'bash',
+        'sql': 'sql'
+    };
+    
+    const langKey = language.toLowerCase();
+    return langMap[langKey] || langMap[extension] || extension || 'plaintext';
+}
+
+function getFileIcon(filename) {
+    const extension = filename.split('.').pop().toLowerCase();
+    
+    const iconMap = {
+        // Code files
+        'js': 'fa-js-square',
+        'ts': 'fa-code',
+        'jsx': 'fa-react',
+        'tsx': 'fa-react',
+        'py': 'fa-python',
+        'java': 'fa-java',
+        'cpp': 'fa-cuttlefish',
+        'c': 'fa-cuttlefish',
+        'cs': 'fa-cuttlefish',
+        'php': 'fa-php',
+        'rb': 'fa-gem',
+        'go': 'fa-code',
+        'rs': 'fa-code',
+        'swift': 'fa-code',
+        'kt': 'fa-code',
+        'dart': 'fa-code',
+        
+        // Web files
+        'html': 'fa-html5',
+        'htm': 'fa-html5',
+        'css': 'fa-css3-alt',
+        'scss': 'fa-sass',
+        'sass': 'fa-sass',
+        'less': 'fa-css3-alt',
+        'json': 'fa-code',
+        'xml': 'fa-code',
+        
+        // Config files
+        'yml': 'fa-code',
+        'yaml': 'fa-code',
+        'toml': 'fa-code',
+        'ini': 'fa-code',
+        'cfg': 'fa-code',
+        'conf': 'fa-code',
+        
+        // Document files
+        'md': 'fa-markdown',
+        'txt': 'fa-file-alt',
+        'pdf': 'fa-file-pdf',
+        'doc': 'fa-file-word',
+        'docx': 'fa-file-word',
+        
+        // Image files
+        'jpg': 'fa-file-image',
+        'jpeg': 'fa-file-image',
+        'png': 'fa-file-image',
+        'gif': 'fa-file-image',
+        'svg': 'fa-file-image',
+        
+        // Archive files
+        'zip': 'fa-file-archive',
+        'rar': 'fa-file-archive',
+        'tar': 'fa-file-archive',
+        'gz': 'fa-file-archive',
+        
+        // Database files
+        'sql': 'fa-database',
+        'db': 'fa-database',
+        'sqlite': 'fa-database',
+    };
+    
+    return iconMap[extension] || 'fa-file';
+}
+
+function formatFileSize(bytes) {
+    if (bytes === 0) return '0 B';
+    
+    const k = 1024;
+    const sizes = ['B', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+}
+
+function updateBreadcrumb(path) {
+    const breadcrumb = document.getElementById('breadcrumb');
+    
+    let breadcrumbHTML = `
+        <div class="breadcrumb-item" data-path="">
+            <i class="fas fa-home"></i>
+            <span>Root</span>
+        </div>
+    `;
+    
+    if (path) {
+        const parts = path.split('/');
+        let currentPath = '';
+        
+        parts.forEach((part, index) => {
+            currentPath += (currentPath ? '/' : '') + part;
+            breadcrumbHTML += `
+                <div class="breadcrumb-separator">/</div>
+                <div class="breadcrumb-item" data-path="${currentPath}">
+                    <span>${part}</span>
+                </div>
+            `;
+        });
+    }
+    
+    breadcrumb.innerHTML = breadcrumbHTML;
+    
+    // Add click event listeners to breadcrumb items
+    breadcrumb.querySelectorAll('.breadcrumb-item').forEach(item => {
+        item.addEventListener('click', () => {
+            const path = item.getAttribute('data-path');
+            loadRepositoryFiles(currentRepo.name, path);
+        });
+    });
+}
+
+function downloadFile(content, filename) {
+    const blob = new Blob([content], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+async function openFollowersModal() {
+    const modal = document.getElementById('followers-modal');
+    const list = document.getElementById('followers-list');
+
+    list.innerHTML = `
+        <div class="loading">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Loading followers...</p>
+        </div>
+    `;
+
+    modal.classList.add('active');
+
+    try {
+        let allFollowers = [];
+        let page = 1;
+        const perPage = 100;
+
+        while (true) {
+            const response = await fetch(
+                `https://api.github.com/users/${username}/followers?per_page=${perPage}&page=${page}`
+            );
+
+            const followers = await response.json();
+
+            if (!Array.isArray(followers) || followers.length === 0) break;
+
+            allFollowers = allFollowers.concat(followers);
+            page++;
+        }
+
+        if (allFollowers.length === 0) {
+            list.innerHTML = `
+                <div style="text-align:center; padding:40px; color:var(--gray);">
+                    No followers yet
+                </div>
+            `;
+            return;
+        }
+
+        list.innerHTML = allFollowers.map(follower => `
+            <div class="follower-item">
+                <div class="follower-avatar">
+                    <img src="${follower.avatar_url}" alt="${follower.login}">
+                </div>
+                <div class="follower-info">
+                    <div class="follower-name">${follower.login}</div>
+                    <div class="follower-username">@${follower.login}</div>
+                </div>
+                <a href="https://github.com/${follower.login}" 
+                   target="_blank" 
+                   class="follower-btn">
+                   <i class="fas fa-external-link-alt"></i> View
+                </a>
+            </div>
+        `).join('');
+
+    } catch (error) {
+        console.error('Error loading followers:', error);
+        list.innerHTML = `
+            <div style="text-align:center; padding:40px; color:var(--gray);">
+                Failed to load followers
+            </div>
+        `;
+    }
+}
+
+function updateAnalytics() {
+    const languages = {};
+    allRepos.forEach(repo => {
+        if (repo.language) {
+            languages[repo.language] = (languages[repo.language] || 0) + 1;
+        }
+    });
+
+    const topLanguages = Object.entries(languages)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 5);
+
+    const languageList = document.getElementById('language-list');
+    if (topLanguages.length > 0) {
+        let languageHTML = '';
+        topLanguages.forEach(([lang, count]) => {
+            const percentage = Math.round((count / allRepos.length) * 100);
+            const color = getLanguageColor(lang);
+
+            languageHTML += `
+                        <div class="language-item">
+                            <div style="display: flex; align-items: center; gap: 8px; min-width: 100px;">
+                                <div class="language-color" style="background-color: ${color}; width: 12px; height: 12px;"></div>
+                                <span style="font-size: 0.9rem;">${lang}</span>
+                            </div>
+                            <div class="language-bar">
+                                <div class="language-fill" style="width: ${percentage}%; background: ${color}"></div>
+                            </div>
+                            <span style="min-width: 40px; text-align: right; font-size: 0.85rem; font-weight: 600;">${percentage}%</span>
+                        </div>
+                    `;
+        });
+        languageList.innerHTML = languageHTML;
+    } else {
+        languageList.innerHTML = '<div style="color: var(--gray); font-size: 0.9rem; text-align: center; padding: 20px;">No language data available</div>';
+    }
+
+    const repoStats = document.getElementById('repo-stats');
+    const avgStars = allRepos.length > 0 ?
+        (allRepos.reduce((sum, repo) => sum + (repo.stargazers_count || 0), 0) / allRepos.length).toFixed(1) : 0;
+    const avgForks = allRepos.length > 0 ?
+        (allRepos.reduce((sum, repo) => sum + (repo.forks_count || 0), 0) / allRepos.length).toFixed(1) : 0;
+    const avgSize = allRepos.length > 0 ?
+        (allRepos.reduce((sum, repo) => sum + (repo.size || 0), 0) / allRepos.length).toFixed(0) : 0;
+    const totalIssues = allRepos.reduce((sum, repo) => sum + (repo.open_issues_count || 0), 0);
+
+    repoStats.innerHTML = `
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+                    <div style="background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 8px; transition: transform 0.3s;">
+                        <div style="color: var(--gray); font-size: 0.85rem; margin-bottom: 5px; display: flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-code-branch" style="color: var(--primary-light);"></i>
+                            <span>Total Repos</span>
+                        </div>
+                        <div style="font-weight: 700; font-size: 1.5rem; color: var(--light);">${allRepos.length}</div>
+                    </div>
+                    <div style="background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 8px; transition: transform 0.3s;">
+                        <div style="color: var(--gray); font-size: 0.85rem; margin-bottom: 5px; display: flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-star" style="color: var(--primary-light);"></i>
+                            <span>Avg Stars</span>
+                        </div>
+                        <div style="font-weight: 700; font-size: 1.5rem; color: var(--light);">${avgStars}</div>
+                    </div>
+                    <div style="background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 8px; transition: transform 0.3s;">
+                        <div style="color: var(--gray); font-size: 0.85rem; margin-bottom: 5px; display: flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-code-branch" style="color: var(--primary-light);"></i>
+                            <span>Avg Forks</span>
+                        </div>
+                        <div style="font-weight: 700; font-size: 1.5rem; color: var(--light);">${avgForks}</div>
+                    </div>
+                    <div style="background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 8px; transition: transform 0.3s;">
+                        <div style="color: var(--gray); font-size: 0.85rem; margin-bottom: 5px; display: flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-database" style="color: var(--primary-light);"></i>
+                            <span>Avg Size</span>
+                        </div>
+                        <div style="font-weight: 700; font-size: 1.5rem; color: var(--light);">${avgSize} KB</div>
+                    </div>
+                    <div style="background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 8px; grid-column: 1 / -1; transition: transform 0.3s;">
+                        <div style="color: var(--gray); font-size: 0.85rem; margin-bottom: 5px; display: flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-exclamation-circle" style="color: var(--primary-light);"></i>
+                            <span>Total Open Issues</span>
+                        </div>
+                        <div style="font-weight: 700; font-size: 1.5rem; color: var(--light);">${totalIssues}</div>
+                    </div>
+                </div>
+            `;
+}
+
+function setupEventListeners() {
+    // Tab switching
+    document.querySelectorAll('.tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+            tab.classList.add('active');
+            const tabId = tab.getAttribute('data-tab');
+            document.getElementById(`${tabId}-tab`).classList.add('active');
+        });
+    });
+
+    // Filter buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const filter = btn.getAttribute('data-filter');
+            applyFilter(filter);
+        });
+    });
+
+    // Search input with debounce
+    let searchTimeout;
+    document.getElementById('repo-search').addEventListener('input', (e) => {
+        clearTimeout(searchTimeout);
+
+        searchTimeout = setTimeout(() => {
+            const searchTerm = e.target.value.toLowerCase().trim();
+
+            if (searchTerm === '') {
+                filteredRepos = [...allRepos];
+            } else {
+                filteredRepos = allRepos.filter(repo =>
+                    repo.name.toLowerCase().includes(searchTerm) ||
+                    (repo.description && repo.description.toLowerCase().includes(searchTerm)) ||
+                    (repo.topics && repo.topics.some(topic => topic.toLowerCase().includes(searchTerm)))
+                );
+            }
+
+            currentPage = 1;
+            displayReposPage();
+        }, 300);
+    });
+
+    // Load more button
+    const loadMoreBtn = document.getElementById('load-more');
+    loadMoreBtn.addEventListener('click', () => {
+        currentPage++;
+        loadMoreRepos();
+    });
+
+    // Followers stat card
+    document.getElementById('followers-stat').addEventListener('click', openFollowersModal);
+
+    // Repository modal close buttons
+    document.getElementById('repo-modal-close').addEventListener('click', () => {
+        document.getElementById('repo-modal').classList.remove('active');
+    });
+
+    document.getElementById('repo-modal-close-btn').addEventListener('click', () => {
+        document.getElementById('repo-modal').classList.remove('active');
+    });
+
+    // Explore files button in repo modal
+    document.getElementById('explore-files-btn').addEventListener('click', () => {
+        if (currentRepo) {
+            document.getElementById('repo-modal').classList.remove('active');
+            setTimeout(() => {
+                openFileExplorer(currentRepo.name);
+            }, 300);
+        }
+    });
+
+    // Followers modal close buttons
+    document.getElementById('followers-modal-close').addEventListener('click', () => {
+        document.getElementById('followers-modal').classList.remove('active');
+    });
+
+    document.getElementById('followers-modal-close-btn').addEventListener('click', () => {
+        document.getElementById('followers-modal').classList.remove('active');
+    });
+
+    // File explorer modal close buttons
+    document.getElementById('file-explorer-close').addEventListener('click', () => {
+        document.getElementById('file-explorer-modal').classList.remove('active');
+    });
+
+    document.getElementById('file-explorer-close-btn').addEventListener('click', () => {
+        document.getElementById('file-explorer-modal').classList.remove('active');
+    });
+
+    // Refresh files button
+    document.getElementById('refresh-files').addEventListener('click', () => {
+        if (currentRepo) {
+            loadRepositoryFiles(currentRepo.name, currentPath);
+        }
+    });
+
+    // Code preview modal close buttons
+    document.getElementById('code-preview-close').addEventListener('click', () => {
+        document.getElementById('code-preview-modal').classList.remove('active');
+    });
+
+    document.getElementById('code-preview-close-btn').addEventListener('click', () => {
+        document.getElementById('code-preview-modal').classList.remove('active');
+    });
+
+    // Code preview back button
+    document.getElementById('code-preview-back-btn').addEventListener('click', () => {
+        document.getElementById('code-preview-modal').classList.remove('active');
+        setTimeout(() => {
+            openFileExplorer(currentRepo.name);
+        }, 300);
+    });
+
+    // Copy code button
+    document.getElementById('copy-code-btn').addEventListener('click', async () => {
+        const codeContent = document.getElementById('code-content').textContent;
+        const copyBtn = document.getElementById('copy-code-btn');
+        
+        try {
+            await navigator.clipboard.writeText(codeContent);
+            
+            // Visual feedback
+            const originalIcon = copyBtn.innerHTML;
+            copyBtn.innerHTML = '<i class="fas fa-check"></i>';
+            copyBtn.classList.add('copy', 'copied');
+            
+            setTimeout(() => {
+                copyBtn.innerHTML = originalIcon;
+                copyBtn.classList.remove('copied');
+            }, 2000);
+            
+        } catch (err) {
+            console.error('Failed to copy code:', err);
+            alert('Failed to copy code to clipboard');
+        }
+    });
+
+    // Explore files buttons in repo cards
+    document.addEventListener('click', (e) => {
+        if (e.target.closest('.action-btn.explore')) {
+            const repoCard = e.target.closest('.repo-card');
+            const repoName = e.target.closest('.action-btn').getAttribute('data-repo-name');
+            e.stopPropagation();
+            openFileExplorer(repoName);
+        }
+    });
+
+    // Topic click events
+    document.addEventListener('click', (e) => {
+        if (e.target.closest('.repo-topic') || e.target.closest('.modal-topic')) {
+            const topic = e.target.closest('[data-topic]').getAttribute('data-topic');
+            if (topic) {
+                document.getElementById('repo-search').value = topic;
+                document.getElementById('repo-search').dispatchEvent(new Event('input'));
+            }
+        }
+    });
+
+    // Close modals when clicking outside
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+            }
+        });
+    });
+
+    // Close modals with Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            document.querySelectorAll('.modal.active').forEach(modal => {
+                modal.classList.remove('active');
+            });
+        }
+    });
+}
+
+function applyFilter(filter) {
+    filteredRepos = [...allRepos];
+
+    switch (filter) {
+        case 'stars':
+            filteredRepos.sort((a, b) => (b.stargazers_count || 0) - (a.stargazers_count || 0));
+            break;
+        case 'updated':
+            filteredRepos.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+            break;
+        case 'all':
+        default:
+            filteredRepos.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+            break;
+    }
+
+    currentPage = 1;
+    displayReposPage();
+}
+
+function getLanguageColor(language) {
+    if (!language) return '#8b5cf6';
+
+    const colors = {
+        'JavaScript': '#f1e05a',
+        'TypeScript': '#2b7489',
+        'Python': '#3572A5',
+        'Java': '#b07219',
+        'C++': '#f34b7d',
+        'C#': '#178600',
+        'PHP': '#4F5D95',
+        'Ruby': '#701516',
+        'CSS': '#563d7c',
+        'HTML': '#e34c26',
+        'Go': '#00ADD8',
+        'Shell': '#89e051',
+        'Vue': '#2c3e50',
+        'React': '#61dafb',
+        'Swift': '#ffac45',
+        'Kotlin': '#A97BFF',
+        'Rust': '#dea584',
+        'Dart': '#00B4AB',
+        'Scala': '#c22d40',
+        'R': '#198CE7'
+    };
+
+    return colors[language] || '#8b5cf6';
+}
+
+function showError(message) {
+    const reposContainer = document.getElementById('repos-container');
+    reposContainer.innerHTML = `
+                <div class="error-state" style="grid-column: 1 / -1;">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>Something went wrong</h3>
+                    <p>${message}</p>
+                    <button class="retry-btn" onclick="location.reload()">
+                        <i class="fas fa-redo"></i> Retry
+                    </button>
+                </div>
+            `;
+}
+
+// Initialize tooltips
+function initTooltips() {
+    const tooltipElements = document.querySelectorAll('[data-tooltip]');
+    tooltipElements.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            const tooltip = el.getAttribute('data-tooltip');
+            if (tooltip) {
+                // Tooltip is handled by CSS
+            }
+        });
+    });
+}
+
+// Initialize when page loads
+window.addEventListener('DOMContentLoaded', () => {
+    initTooltips();
+});
+
+    </script>
+</body>
+
+</html>
