@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Repository Explorer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-color: #2d3436;
+            --secondary-color: #636e72;
+            --accent-color: #0984e3;
+            --light-color: #f5f6fa;
+            --dark-color: #2d3436;
+            --folder-color: #e17055;
+            --file-color: #00b894;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--dark-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            margin-bottom: 30px;
+            animation: slideDown 0.5s ease-out;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            background: linear-gradient(to right, var(--accent-color), #6c5ce7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--secondary-color);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .input-section {
+            background-color: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            animation: slideUp 0.5s ease-out 0.2s both;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .repo-input {
+            flex: 1;
+            padding: 18px 24px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .repo-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(9, 132, 227, 0.1);
+        }
+
+        .btn {
+            padding: 18px 36px;
+            background: linear-gradient(to right, var(--accent-color), #6c5ce7);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(9, 132, 227, 0.2);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn:disabled {
+            background: #b2bec3;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .example-text {
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .repo-info {
+            background-color: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            display: none;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        .repo-info.visible {
+            display: block;
+        }
+
+        .repo-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .repo-title {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .repo-stats {
+            display: flex;
+            gap: 20px;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--secondary-color);
+        }
+
+        .content-section {
+            background-color: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            display: none;
+            animation: slideUp 0.5s ease-out 0.4s both;
+        }
+
+        .content-section.visible {
+            display: block;
+        }
+
+        .path-nav {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .path-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--secondary-color);
+            cursor: pointer;
+            transition: var(--transition);
+            padding: 5px 10px;
+            border-radius: 8px;
+        }
+
+        .path-item:hover {
+            background-color: #f8f9fa;
+            color: var(--accent-color);
+        }
+
+        .separator {
+            color: #ddd;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--secondary-color);
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--accent-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        .files-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .file-item, .folder-item {
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            transition: var(--transition);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 2px solid transparent;
+            animation: fadeInUp 0.5s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .file-item:hover, .folder-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+            border-color: rgba(9, 132, 227, 0.2);
+        }
+
+        .folder-item {
+            border-left: 5px solid var(--folder-color);
+        }
+
+        .file-item {
+            border-left: 5px solid var(--file-color);
+        }
+
+        .item-icon {
+            font-size: 1.8rem;
+        }
+
+        .folder-icon {
+            color: var(--folder-color);
+        }
+
+        .file-icon {
+            color: var(--file-color);
+        }
+
+        .item-info {
+            flex: 1;
+        }
+
+        .item-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+            word-break: break-all;
+        }
+
+        .item-size {
+            font-size: 0.85rem;
+            color: var(--secondary-color);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--secondary-color);
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            color: #dfe6e9;
+            margin-bottom: 20px;
+        }
+
+        .back-btn {
+            background-color: #f8f9fa;
+            color: var(--primary-color);
+            padding: 12px 24px;
+            border-radius: 10px;
+            border: 2px solid #e0e0e0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition);
+            margin-bottom: 20px;
+        }
+
+        .back-btn:hover {
+            background-color: #e9ecef;
+        }
+
+        .file-content {
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 20px;
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .file-content.visible {
+            display: block;
+        }
+
+        .file-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .file-name {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .code-container {
+            background-color: #2d3436;
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+            color: #f5f6fa;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .error-message {
+            background-color: #ffeaea;
+            color: #d63031;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: none;
+            animation: shake 0.5s ease-out;
+        }
+
+        .error-message.visible {
+            display: block;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .input-group {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            .files-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .repo-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .repo-stats {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fab fa-github"></i> GitHub Repository Explorer</h1>
+            <p class="subtitle">Enter a GitHub repository URL to explore its files and folders with beautiful animations and interactive functionality.</p>
+        </header>
+
+        <div class="input-section">
+            <div class="input-group">
+                <input type="text" class="repo-input" id="repoUrl" placeholder="Enter GitHub repository URL (e.g., https://github.com/musfiqurjahin/Learning_Cplus-pluss)" value="https://github.com/musfiqurjahin/Learning_Cplus-pluss">
+                <button class="btn" id="loadRepo">
+                    <i class="fas fa-search"></i> Explore Repository
+                </button>
+            </div>
+            <p class="example-text">Try: https://github.com/torvalds/linux or any public GitHub repository URL</p>
+        </div>
+
+        <div class="error-message" id="errorMessage">
+            <i class="fas fa-exclamation-circle"></i> <span id="errorText"></span>
+        </div>
+
+        <div class="repo-info" id="repoInfo">
+            <div class="repo-header">
+                <div class="repo-title">
+                    <i class="fab fa-github"></i>
+                    <span id="repoName">Repository Name</span>
+                </div>
+                <div class="repo-stats">
+                    <div class="stat">
+                        <i class="fas fa-star"></i>
+                        <span id="repoStars">0</span>
+                    </div>
+                    <div class="stat">
+                        <i class="fas fa-code-branch"></i>
+                        <span id="repoForks">0</span>
+                    </div>
+                    <div class="stat">
+                        <i class="fas fa-eye"></i>
+                        <span id="repoWatchers">0</span>
+                    </div>
+                </div>
+            </div>
+            <p id="repoDescription">Repository description will appear here.</p>
+        </div>
+
+        <div class="content-section" id="contentSection">
+            <div class="path-nav" id="pathNav">
+                <!-- Path navigation will be inserted here -->
+            </div>
+
+            <button class="back-btn" id="backBtn" style="display: none;">
+                <i class="fas fa-arrow-left"></i> Back to Parent Directory
+            </button>
+
+            <div id="filesContainer">
+                <!-- Files and folders will be inserted here -->
+                <div class="empty-state">
+                    <div class="empty-icon">
+                        <i class="fas fa-folder-open"></i>
+                    </div>
+                    <h3>No Repository Loaded</h3>
+                    <p>Enter a GitHub repository URL above to explore its contents</p>
+                </div>
+            </div>
+
+            <div class="file-content" id="fileContent">
+                <div class="file-header">
+                    <div class="file-name">
+                        <i class="fas fa-file-code"></i>
+                        <span id="fileName">file.js</span>
+                    </div>
+                    <button class="btn" id="closeFileBtn">
+                        <i class="fas fa-times"></i> Close
+                    </button>
+                </div>
+                <div class="code-container" id="codeContainer">
+                    // File content will appear here
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>GitHub Repository Explorer &copy; 2023 | Made with <i class="fas fa-heart" style="color:#e84393;"></i> for developers</p>
+        </footer>
+    </div>
+
+    <script>
+        // DOM Elements
+        const repoUrlInput = document.getElementById('repoUrl');
+        const loadRepoBtn = document.getElementById('loadRepo');
+        const errorMessage = document.getElementById('errorMessage');
+        const errorText = document.getElementById('errorText');
+        const repoInfo = document.getElementById('repoInfo');
+        const repoName = document.getElementById('repoName');
+        const repoDescription = document.getElementById('repoDescription');
+        const repoStars = document.getElementById('repoStars');
+        const repoForks = document.getElementById('repoForks');
+        const repoWatchers = document.getElementById('repoWatchers');
+        const contentSection = document.getElementById('contentSection');
+        const pathNav = document.getElementById('pathNav');
+        const backBtn = document.getElementById('backBtn');
+        const filesContainer = document.getElementById('filesContainer');
+        const fileContent = document.getElementById('fileContent');
+        const fileName = document.getElementById('fileName');
+        const codeContainer = document.getElementById('codeContainer');
+        const closeFileBtn = document.getElementById('closeFileBtn');
+
+        // State
+        let currentRepo = null;
+        let currentPath = '';
+        let pathHistory = [];
+        let currentFiles = [];
+
+        // GitHub API base URL
+        const GITHUB_API = 'https://api.github.com/repos';
+
+        // Load repository when button is clicked
+        loadRepoBtn.addEventListener('click', loadRepository);
+        repoUrlInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') loadRepository();
+        });
+
+        // Close file view when close button is clicked
+        closeFileBtn.addEventListener('click', () => {
+            fileContent.classList.remove('visible');
+            filesContainer.style.display = 'block';
+        });
+
+        // Go back to parent directory
+        backBtn.addEventListener('click', goBack);
+
+        // Function to load repository
+        async function loadRepository() {
+            const repoUrl = repoUrlInput.value.trim();
+            
+            if (!repoUrl) {
+                showError('Please enter a GitHub repository URL');
+                return;
+            }
+
+            // Extract owner and repo name from URL
+            const match = repoUrl.match(/github\.com\/([^\/]+)\/([^\/]+)/);
+            
+            if (!match) {
+                showError('Invalid GitHub repository URL. Please use format: https://github.com/owner/repo');
+                return;
+            }
+
+            const owner = match[1];
+            const repo = match[2];
+            currentRepo = { owner, repo };
+            currentPath = '';
+            pathHistory = [];
+
+            // Show loading state
+            loadRepoBtn.disabled = true;
+            loadRepoBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+            hideError();
+            hideRepoInfo();
+            hideContentSection();
+            
+            // Clear previous content
+            filesContainer.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Loading repository contents...</p>
+                </div>
+            `;
+
+            try {
+                // Fetch repository info and contents in parallel
+                const [repoData, contentsData] = await Promise.all([
+                    fetch(`${GITHUB_API}/${owner}/${repo}`).then(res => res.json()),
+                    fetch(`${GITHUB_API}/${owner}/${repo}/contents`).then(res => res.json())
+                ]);
+
+                if (repoData.message) {
+                    throw new Error(repoData.message);
+                }
+
+                // Update repository info
+                updateRepoInfo(repoData);
+                showRepoInfo();
+                
+                // Update contents
+                updateContents(contentsData);
+                updatePathNav();
+                showContentSection();
+                
+                // Store files for navigation
+                currentFiles = contentsData;
+                
+            } catch (error) {
+                showError(`Failed to load repository: ${error.message}`);
+                filesContainer.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <h3>Failed to Load Repository</h3>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            } finally {
+                // Reset button state
+                loadRepoBtn.disabled = false;
+                loadRepoBtn.innerHTML = '<i class="fas fa-search"></i> Explore Repository';
+            }
+        }
+
+        // Function to update repository info display
+        function updateRepoInfo(data) {
+            repoName.textContent = data.full_name || `${currentRepo.owner}/${currentRepo.repo}`;
+            repoDescription.textContent = data.description || 'No description provided';
+            repoStars.textContent = data.stargazers_count?.toLocaleString() || '0';
+            repoForks.textContent = data.forks_count?.toLocaleString() || '0';
+            repoWatchers.textContent = data.watchers_count?.toLocaleString() || '0';
+        }
+
+        // Function to update contents display
+        function updateContents(contents) {
+            // Clear container
+            filesContainer.innerHTML = '';
+            
+            if (!contents || contents.length === 0) {
+                filesContainer.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">
+                            <i class="fas fa-folder"></i>
+                        </div>
+                        <h3>Empty Directory</h3>
+                        <p>This directory doesn't contain any files or folders</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Sort: folders first, then files
+            const sortedContents = contents.sort((a, b) => {
+                if (a.type === b.type) {
+                    return a.name.localeCompare(b.name);
+                }
+                return a.type === 'dir' ? -1 : 1;
+            });
+
+            // Create elements for each item
+            sortedContents.forEach((item, index) => {
+                const itemElement = document.createElement('div');
+                itemElement.className = item.type === 'dir' ? 'folder-item' : 'file-item';
+                itemElement.style.animationDelay = `${index * 0.05}s`;
+                
+                const iconClass = item.type === 'dir' ? 'fas fa-folder' : getFileIcon(item.name);
+                const iconColor = item.type === 'dir' ? 'folder-icon' : 'file-icon';
+                
+                itemElement.innerHTML = `
+                    <div class="item-icon ${iconColor}">
+                        <i class="${iconClass}"></i>
+                    </div>
+                    <div class="item-info">
+                        <div class="item-name">${item.name}</div>
+                        ${item.type === 'file' ? `<div class="item-size">${formatFileSize(item.size)}</div>` : ''}
+                    </div>
+                    ${item.type === 'dir' ? '<i class="fas fa-chevron-right"></i>' : ''}
+                `;
+                
+                // Add click event
+                itemElement.addEventListener('click', () => {
+                    if (item.type === 'dir') {
+                        openDirectory(item.path);
+                    } else {
+                        openFile(item);
+                    }
+                });
+                
+                filesContainer.appendChild(itemElement);
+            });
+        }
+
+        // Function to open a directory
+        async function openDirectory(path) {
+            // Store current files in history
+            pathHistory.push({
+                path: currentPath,
+                files: currentFiles
+            });
+            
+            // Update current path
+            currentPath = path;
+            
+            // Show loading state
+            filesContainer.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Loading directory contents...</p>
+                </div>
+            `;
+            
+            // Show back button
+            backBtn.style.display = 'flex';
+            
+            try {
+                // Fetch directory contents
+                const response = await fetch(`${GITHUB_API}/${currentRepo.owner}/${currentRepo.repo}/contents/${path}`);
+                const contents = await response.json();
+                
+                if (contents.message) {
+                    throw new Error(contents.message);
+                }
+                
+                // Update display
+                updateContents(contents);
+                updatePathNav();
+                
+                // Store current files
+                currentFiles = contents;
+                
+            } catch (error) {
+                showError(`Failed to load directory: ${error.message}`);
+                goBack(); // Go back on error
+            }
+        }
+
+        // Function to open a file
+        async function openFile(file) {
+            // Hide files container and show file content
+            filesContainer.style.display = 'none';
+            
+            // Update file name
+            fileName.textContent = file.name;
+            
+            // Show loading in code container
+            codeContainer.innerHTML = '<div style="text-align: center; padding: 20px;"><i class="fas fa-spinner fa-spin"></i> Loading file content...</div>';
+            
+            // Show file content section
+            fileContent.classList.add('visible');
+            
+            try {
+                // Fetch file content
+                const response = await fetch(file.download_url || `${GITHUB_API}/${currentRepo.owner}/${currentRepo.repo}/contents/${file.path}`);
+                
+                if (file.size > 100000) { // Limit to 100KB files
+                    codeContainer.textContent = 'File is too large to display in the preview.';
+                    return;
+                }
+                
+                let content;
+                
+                // Check if it's a binary file by extension
+                const binaryExtensions = ['.png', '.jpg', '.jpeg', '.gif', '.ico', '.pdf', '.zip', '.tar', '.gz'];
+                const isBinary = binaryExtensions.some(ext => file.name.toLowerCase().endsWith(ext));
+                
+                if (isBinary) {
+                    content = 'Binary file cannot be displayed.';
+                } else {
+                    content = await response.text();
+                    
+                    // Try to format code with basic syntax highlighting
+                    if (file.name.endsWith('.js') || file.name.endsWith('.jsx') || file.name.endsWith('.ts') || file.name.endsWith('.tsx')) {
+                        content = highlightJavaScript(content);
+                    } else if (file.name.endsWith('.html')) {
+                        content = highlightHTML(content);
+                    } else if (file.name.endsWith('.css')) {
+                        content = highlightCSS(content);
+                    } else if (file.name.endsWith('.json')) {
+                        content = highlightJSON(content);
+                    } else if (file.name.endsWith('.py')) {
+                        content = highlightPython(content);
+                    }
+                }
+                
+                codeContainer.innerHTML = `<pre>${content}</pre>`;
+                
+            } catch (error) {
+                codeContainer.textContent = `Failed to load file: ${error.message}`;
+            }
+        }
+
+        // Function to go back to parent directory
+        function goBack() {
+            if (pathHistory.length === 0) return;
+            
+            const previousState = pathHistory.pop();
+            currentPath = previousState.path;
+            currentFiles = previousState.files;
+            
+            // Update display
+            updateContents(currentFiles);
+            updatePathNav();
+            
+            // Hide back button if we're at root
+            if (pathHistory.length === 0) {
+                backBtn.style.display = 'none';
+            }
+        }
+
+        // Function to update path navigation
+        function updatePathNav() {
+            // Clear current path nav
+            pathNav.innerHTML = '';
+            
+            // Add root link
+            const rootItem = document.createElement('div');
+            rootItem.className = 'path-item';
+            rootItem.innerHTML = '<i class="fas fa-home"></i> root';
+            rootItem.addEventListener('click', () => {
+                // Go back to root
+                while (pathHistory.length > 0) {
+                    goBack();
+                }
+            });
+            pathNav.appendChild(rootItem);
+            
+            // Add path segments if not at root
+            if (currentPath) {
+                const segments = currentPath.split('/');
+                let accumulatedPath = '';
+                
+                segments.forEach((segment, index) => {
+                    // Add separator
+                    const separator = document.createElement('div');
+                    separator.className = 'separator';
+                    separator.innerHTML = '<i class="fas fa-chevron-right"></i>';
+                    pathNav.appendChild(separator);
+                    
+                    // Add path segment
+                    accumulatedPath += (accumulatedPath ? '/' : '') + segment;
+                    
+                    const pathItem = document.createElement('div');
+                    pathItem.className = 'path-item';
+                    pathItem.textContent = segment;
+                    
+                    // Store the path to navigate to
+                    const pathToNavigate = accumulatedPath;
+                    
+                    pathItem.addEventListener('click', () => {
+                        // Navigate to this path
+                        const historyIndex = pathHistory.findIndex(item => item.path === pathToNavigate);
+                        
+                        if (historyIndex !== -1) {
+                            // If we're going back in history, pop items until we reach this path
+                            while (pathHistory.length > historyIndex + 1) {
+                                pathHistory.pop();
+                            }
+                            goBack();
+                        } else {
+                            // Otherwise, navigate directly
+                            openDirectory(pathToNavigate);
+                        }
+                    });
+                    
+                    pathNav.appendChild(pathItem);
+                });
+            }
+        }
+
+        // Function to get appropriate file icon based on extension
+        function getFileIcon(filename) {
+            const extension = filename.split('.').pop().toLowerCase();
+            
+            const iconMap = {
+                // Code files
+                'js': 'fas fa-js-square',
+                'jsx': 'fab fa-react',
+                'ts': 'fas fa-code',
+                'tsx': 'fab fa-react',
+                'py': 'fab fa-python',
+                'java': 'fab fa-java',
+                'cpp': 'fas fa-file-code',
+                'c': 'fas fa-file-code',
+                'h': 'fas fa-file-code',
+                'cs': 'fas fa-file-code',
+                'php': 'fab fa-php',
+                'rb': 'far fa-gem',
+                'go': 'fas fa-code',
+                'rs': 'fas fa-code',
+                
+                // Web files
+                'html': 'fab fa-html5',
+                'htm': 'fab fa-html5',
+                'css': 'fab fa-css3-alt',
+                'scss': 'fas fa-code',
+                'sass': 'fas fa-code',
+                'less': 'fas fa-code',
+                
+                // Data files
+                'json': 'fas fa-code',
+                'xml': 'fas fa-code',
+                'yml': 'fas fa-code',
+                'yaml': 'fas fa-code',
+                'csv': 'fas fa-file-csv',
+                'md': 'fas fa-markdown',
+                'txt': 'fas fa-file-alt',
+                
+                // Config files
+                'gitignore': 'fas fa-file-code',
+                'dockerfile': 'fab fa-docker',
+                'env': 'fas fa-cog',
+                
+                // Images
+                'png': 'fas fa-file-image',
+                'jpg': 'fas fa-file-image',
+                'jpeg': 'fas fa-file-image',
+                'gif': 'fas fa-file-image',
+                'svg': 'fas fa-file-image',
+                
+                // Documents
+                'pdf': 'fas fa-file-pdf',
+                'doc': 'fas fa-file-word',
+                'docx': 'fas fa-file-word',
+                
+                // Archives
+                'zip': 'fas fa-file-archive',
+                'tar': 'fas fa-file-archive',
+                'gz': 'fas fa-file-archive',
+                
+                // Default
+                'default': 'fas fa-file'
+            };
+            
+            return iconMap[extension] || iconMap.default;
+        }
+
+        // Function to format file size
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        // Basic syntax highlighting functions
+        function highlightJavaScript(code) {
+            return escapeHtml(code)
+                .replace(/(\/\/.*)/g, '<span style="color: #6c9955;">$1</span>')
+                .replace(/(\/\*[\s\S]*?\*\/)/g, '<span style="color: #6c9955;">$1</span>')
+                .replace(/\b(const|let|var|function|return|if|else|for|while|do|switch|case|break|continue|class|extends|import|export|default|from|as|await|async|try|catch|finally|throw|new|this|super|typeof|instanceof|in|of|void|with|yield)\b/g, '<span style="color: #569cd6;">$1</span>')
+                .replace(/\b(true|false|null|undefined)\b/g, '<span style="color: #569cd6;">$1</span>')
+                .replace(/\b(\d+\.?\d*)\b/g, '<span style="color: #b5cea8;">$1</span>')
+                .replace(/(["'`])(.*?)\1/g, '<span style="color: #ce9178;">$1$2$1</span>');
+        }
+
+        function highlightHTML(code) {
+            return escapeHtml(code)
+                .replace(/&lt;(\/?)([a-zA-Z][a-zA-Z0-9]*)([^&]*)&gt;/g, '&lt;<span style="color: #569cd6;">$1$2</span>$3&gt;')
+                .replace(/(&lt;!--[\s\S]*?--&gt;)/g, '<span style="color: #6c9955;">$1</span>')
+                .replace(/(["'][^"']*["'])/g, '<span style="color: #ce9178;">$1</span>');
+        }
+
+        function highlightCSS(code) {
+            return escapeHtml(code)
+                .replace(/(\/\*[\s\S]*?\*\/)/g, '<span style="color: #6c9955;">$1</span>')
+                .replace(/([a-zA-Z-]+)(?=\s*:)/g, '<span style="color: #9cdcfe;">$1</span>')
+                .replace(/(:[a-zA-Z-]+)/g, '<span style="color: #ce9178;">$1</span>')
+                .replace(/#[0-9a-fA-F]{3,6}/g, '<span style="color: #b5cea8;">$&</span>')
+                .replace(/(["'][^"']*["'])/g, '<span style="color: #ce9178;">$1</span>')
+                .replace(/\b(\d+\.?\d*)(px|em|rem|%|vw|vh|vmin|vmax)?\b/g, '<span style="color: #b5cea8;">$1$2</span>');
+        }
+
+        function highlightJSON(code) {
+            return escapeHtml(code)
+                .replace(/(["'][^"']*["'])(?=\s*:)/g, '<span style="color: #9cdcfe;">$1</span>')
+                .replace(/(:)(\s*)(["'][^"']*["'])/g, '$1$2<span style="color: #ce9178;">$3</span>')
+                .replace(/\b(true|false|null)\b/g, '<span style="color: #569cd6;">$1</span>')
+                .replace(/\b(\d+\.?\d*)\b/g, '<span style="color: #b5cea8;">$1</span>');
+        }
+
+        function highlightPython(code) {
+            return escapeHtml(code)
+                .replace(/(#.*)/g, '<span style="color: #6c9955;">$1</span>')
+                .replace(/(["'][^"']*["'])/g, '<span style="color: #ce9178;">$1</span>')
+                .replace(/\b(def|class|return|if|elif|else|for|while|try|except|finally|with|import|from|as|pass|break|continue|lambda|yield|raise|assert|del|global|nonlocal|not|and|or|in|is|None|True|False)\b/g, '<span style="color: #569cd6;">$1</span>')
+                .replace(/\b(\d+\.?\d*)\b/g, '<span style="color: #b5cea8;">$1</span>');
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // UI helper functions
+        function showError(message) {
+            errorText.textContent = message;
+            errorMessage.classList.add('visible');
+        }
+
+        function hideError() {
+            errorMessage.classList.remove('visible');
+        }
+
+        function showRepoInfo() {
+            repoInfo.classList.add('visible');
+        }
+
+        function hideRepoInfo() {
+            repoInfo.classList.remove('visible');
+        }
+
+        function showContentSection() {
+            contentSection.classList.add('visible');
+        }
+
+        function hideContentSection() {
+            contentSection.classList.remove('visible');
+        }
+
+        // Initialize with a sample repository
+        window.addEventListener('DOMContentLoaded', () => {
+            // Load a sample repository after a short delay
+            setTimeout(() => {
+                loadRepository();
+            }, 500);
+        });
+    </script>
+</body>
+</html>
