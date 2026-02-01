@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -243,7 +244,8 @@
             gap: 15px;
         }
 
-        .file-item, .folder-item {
+        .file-item,
+        .folder-item {
             background-color: #f8f9fa;
             border-radius: 12px;
             padding: 20px;
@@ -257,7 +259,8 @@
             animation-fill-mode: both;
         }
 
-        .file-item:hover, .folder-item:hover {
+        .file-item:hover,
+        .folder-item:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
             border-color: rgba(9, 132, 227, 0.2);
@@ -392,34 +395,82 @@
 
         /* Animations */
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         @keyframes slideDown {
-            from { transform: translateY(-30px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+            from {
+                transform: translateY(-30px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         @keyframes slideUp {
-            from { transform: translateY(30px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         @keyframes fadeInUp {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-            20%, 40%, 60%, 80% { transform: translateX(5px); }
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            10%,
+            30%,
+            50%,
+            70%,
+            90% {
+                transform: translateX(-5px);
+            }
+
+            20%,
+            40%,
+            60%,
+            80% {
+                transform: translateX(5px);
+            }
         }
 
         /* Responsive design */
@@ -427,42 +478,46 @@
             .input-group {
                 flex-direction: column;
             }
-            
+
             .btn {
                 width: 100%;
             }
-            
+
             .files-container {
                 grid-template-columns: 1fr;
             }
-            
+
             .repo-header {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 15px;
             }
-            
+
             .repo-stats {
                 width: 100%;
                 justify-content: space-between;
             }
-            
+
             h1 {
                 font-size: 2.2rem;
             }
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <header>
             <h1><i class="fab fa-github"></i> GitHub Repository Explorer</h1>
-            <p class="subtitle">Enter a GitHub repository URL to explore its files and folders with beautiful animations and interactive functionality.</p>
+            <p class="subtitle">Enter a GitHub repository URL to explore its files and folders with beautiful animations
+                and interactive functionality.</p>
         </header>
 
         <div class="input-section">
             <div class="input-group">
-                <input type="text" class="repo-input" id="repoUrl" placeholder="Enter GitHub repository URL (e.g., https://github.com/musfiqurjahin/Learning_Cplus-pluss)" value="https://github.com/musfiqurjahin/Learning_Cplus-pluss">
+                <input type="text" class="repo-input" id="repoUrl"
+                    placeholder="Enter GitHub repository URL (e.g., https://github.com/musfiqurjahin/Learning_Cplus-pluss)"
+                    value="https://github.com/musfiqurjahin/Learning_Cplus-pluss">
                 <button class="btn" id="loadRepo">
                     <i class="fas fa-search"></i> Explore Repository
                 </button>
@@ -535,7 +590,8 @@
         </div>
 
         <footer>
-            <p>GitHub Repository Explorer &copy; 2023 | Made with <i class="fas fa-heart" style="color:#e84393;"></i> for developers</p>
+            <p>GitHub Repository Explorer &copy; 2023 | Made with <i class="fas fa-heart" style="color:#e84393;"></i>
+                for developers</p>
         </footer>
     </div>
 
@@ -587,7 +643,7 @@
         // Function to load repository
         async function loadRepository() {
             const repoUrl = repoUrlInput.value.trim();
-            
+
             if (!repoUrl) {
                 showError('Please enter a GitHub repository URL');
                 return;
@@ -595,7 +651,7 @@
 
             // Extract owner and repo name from URL
             const match = repoUrl.match(/github\.com\/([^\/]+)\/([^\/]+)/);
-            
+
             if (!match) {
                 showError('Invalid GitHub repository URL. Please use format: https://github.com/owner/repo');
                 return;
@@ -613,7 +669,7 @@
             hideError();
             hideRepoInfo();
             hideContentSection();
-            
+
             // Clear previous content
             filesContainer.innerHTML = `
                 <div class="loading">
@@ -636,15 +692,15 @@
                 // Update repository info
                 updateRepoInfo(repoData);
                 showRepoInfo();
-                
+
                 // Update contents
                 updateContents(contentsData);
                 updatePathNav();
                 showContentSection();
-                
+
                 // Store files for navigation
                 currentFiles = contentsData;
-                
+
             } catch (error) {
                 showError(`Failed to load repository: ${error.message}`);
                 filesContainer.innerHTML = `
@@ -676,7 +732,7 @@
         function updateContents(contents) {
             // Clear container
             filesContainer.innerHTML = '';
-            
+
             if (!contents || contents.length === 0) {
                 filesContainer.innerHTML = `
                     <div class="empty-state">
@@ -703,10 +759,10 @@
                 const itemElement = document.createElement('div');
                 itemElement.className = item.type === 'dir' ? 'folder-item' : 'file-item';
                 itemElement.style.animationDelay = `${index * 0.05}s`;
-                
+
                 const iconClass = item.type === 'dir' ? 'fas fa-folder' : getFileIcon(item.name);
                 const iconColor = item.type === 'dir' ? 'folder-icon' : 'file-icon';
-                
+
                 itemElement.innerHTML = `
                     <div class="item-icon ${iconColor}">
                         <i class="${iconClass}"></i>
@@ -717,7 +773,7 @@
                     </div>
                     ${item.type === 'dir' ? '<i class="fas fa-chevron-right"></i>' : ''}
                 `;
-                
+
                 // Add click event
                 itemElement.addEventListener('click', () => {
                     if (item.type === 'dir') {
@@ -726,7 +782,7 @@
                         openFile(item);
                     }
                 });
-                
+
                 filesContainer.appendChild(itemElement);
             });
         }
@@ -738,10 +794,10 @@
                 path: currentPath,
                 files: currentFiles
             });
-            
+
             // Update current path
             currentPath = path;
-            
+
             // Show loading state
             filesContainer.innerHTML = `
                 <div class="loading">
@@ -749,26 +805,26 @@
                     <p>Loading directory contents...</p>
                 </div>
             `;
-            
+
             // Show back button
             backBtn.style.display = 'flex';
-            
+
             try {
                 // Fetch directory contents
                 const response = await fetch(`${GITHUB_API}/${currentRepo.owner}/${currentRepo.repo}/contents/${path}`);
                 const contents = await response.json();
-                
+
                 if (contents.message) {
                     throw new Error(contents.message);
                 }
-                
+
                 // Update display
                 updateContents(contents);
                 updatePathNav();
-                
+
                 // Store current files
                 currentFiles = contents;
-                
+
             } catch (error) {
                 showError(`Failed to load directory: ${error.message}`);
                 goBack(); // Go back on error
@@ -779,36 +835,36 @@
         async function openFile(file) {
             // Hide files container and show file content
             filesContainer.style.display = 'none';
-            
+
             // Update file name
             fileName.textContent = file.name;
-            
+
             // Show loading in code container
             codeContainer.innerHTML = '<div style="text-align: center; padding: 20px;"><i class="fas fa-spinner fa-spin"></i> Loading file content...</div>';
-            
+
             // Show file content section
             fileContent.classList.add('visible');
-            
+
             try {
                 // Fetch file content
                 const response = await fetch(file.download_url || `${GITHUB_API}/${currentRepo.owner}/${currentRepo.repo}/contents/${file.path}`);
-                
+
                 if (file.size > 100000) { // Limit to 100KB files
                     codeContainer.textContent = 'File is too large to display in the preview.';
                     return;
                 }
-                
+
                 let content;
-                
+
                 // Check if it's a binary file by extension
                 const binaryExtensions = ['.png', '.jpg', '.jpeg', '.gif', '.ico', '.pdf', '.zip', '.tar', '.gz'];
                 const isBinary = binaryExtensions.some(ext => file.name.toLowerCase().endsWith(ext));
-                
+
                 if (isBinary) {
                     content = 'Binary file cannot be displayed.';
                 } else {
                     content = await response.text();
-                    
+
                     // Try to format code with basic syntax highlighting
                     if (file.name.endsWith('.js') || file.name.endsWith('.jsx') || file.name.endsWith('.ts') || file.name.endsWith('.tsx')) {
                         content = highlightJavaScript(content);
@@ -822,9 +878,9 @@
                         content = highlightPython(content);
                     }
                 }
-                
+
                 codeContainer.innerHTML = `<pre>${content}</pre>`;
-                
+
             } catch (error) {
                 codeContainer.textContent = `Failed to load file: ${error.message}`;
             }
@@ -833,15 +889,15 @@
         // Function to go back to parent directory
         function goBack() {
             if (pathHistory.length === 0) return;
-            
+
             const previousState = pathHistory.pop();
             currentPath = previousState.path;
             currentFiles = previousState.files;
-            
+
             // Update display
             updateContents(currentFiles);
             updatePathNav();
-            
+
             // Hide back button if we're at root
             if (pathHistory.length === 0) {
                 backBtn.style.display = 'none';
@@ -852,7 +908,7 @@
         function updatePathNav() {
             // Clear current path nav
             pathNav.innerHTML = '';
-            
+
             // Add root link
             const rootItem = document.createElement('div');
             rootItem.className = 'path-item';
@@ -864,33 +920,33 @@
                 }
             });
             pathNav.appendChild(rootItem);
-            
+
             // Add path segments if not at root
             if (currentPath) {
                 const segments = currentPath.split('/');
                 let accumulatedPath = '';
-                
+
                 segments.forEach((segment, index) => {
                     // Add separator
                     const separator = document.createElement('div');
                     separator.className = 'separator';
                     separator.innerHTML = '<i class="fas fa-chevron-right"></i>';
                     pathNav.appendChild(separator);
-                    
+
                     // Add path segment
                     accumulatedPath += (accumulatedPath ? '/' : '') + segment;
-                    
+
                     const pathItem = document.createElement('div');
                     pathItem.className = 'path-item';
                     pathItem.textContent = segment;
-                    
+
                     // Store the path to navigate to
                     const pathToNavigate = accumulatedPath;
-                    
+
                     pathItem.addEventListener('click', () => {
                         // Navigate to this path
                         const historyIndex = pathHistory.findIndex(item => item.path === pathToNavigate);
-                        
+
                         if (historyIndex !== -1) {
                             // If we're going back in history, pop items until we reach this path
                             while (pathHistory.length > historyIndex + 1) {
@@ -902,7 +958,7 @@
                             openDirectory(pathToNavigate);
                         }
                     });
-                    
+
                     pathNav.appendChild(pathItem);
                 });
             }
@@ -911,7 +967,7 @@
         // Function to get appropriate file icon based on extension
         function getFileIcon(filename) {
             const extension = filename.split('.').pop().toLowerCase();
-            
+
             const iconMap = {
                 // Code files
                 'js': 'fas fa-js-square',
@@ -928,7 +984,7 @@
                 'rb': 'far fa-gem',
                 'go': 'fas fa-code',
                 'rs': 'fas fa-code',
-                
+
                 // Web files
                 'html': 'fab fa-html5',
                 'htm': 'fab fa-html5',
@@ -936,7 +992,7 @@
                 'scss': 'fas fa-code',
                 'sass': 'fas fa-code',
                 'less': 'fas fa-code',
-                
+
                 // Data files
                 'json': 'fas fa-code',
                 'xml': 'fas fa-code',
@@ -945,44 +1001,44 @@
                 'csv': 'fas fa-file-csv',
                 'md': 'fas fa-markdown',
                 'txt': 'fas fa-file-alt',
-                
+
                 // Config files
                 'gitignore': 'fas fa-file-code',
                 'dockerfile': 'fab fa-docker',
                 'env': 'fas fa-cog',
-                
+
                 // Images
                 'png': 'fas fa-file-image',
                 'jpg': 'fas fa-file-image',
                 'jpeg': 'fas fa-file-image',
                 'gif': 'fas fa-file-image',
                 'svg': 'fas fa-file-image',
-                
+
                 // Documents
                 'pdf': 'fas fa-file-pdf',
                 'doc': 'fas fa-file-word',
                 'docx': 'fas fa-file-word',
-                
+
                 // Archives
                 'zip': 'fas fa-file-archive',
                 'tar': 'fas fa-file-archive',
                 'gz': 'fas fa-file-archive',
-                
+
                 // Default
                 'default': 'fas fa-file'
             };
-            
+
             return iconMap[extension] || iconMap.default;
         }
 
         // Function to format file size
         function formatFileSize(bytes) {
             if (bytes === 0) return '0 Bytes';
-            
+
             const k = 1024;
             const sizes = ['Bytes', 'KB', 'MB', 'GB'];
             const i = Math.floor(Math.log(bytes) / Math.log(k));
-            
+
             return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
         }
 
@@ -1071,4 +1127,5 @@
         });
     </script>
 </body>
+
 </html>
